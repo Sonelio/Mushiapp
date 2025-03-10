@@ -214,7 +214,7 @@ export default function MembershipPage() {
 
   return (
     <div
-      className="min-h-screen flex text-white relative"
+      className="min-h-screen flex text-white relative pt-32"
       style={{
         background:
           "repeating-radial-gradient(circle at center, #0B0F0F 0, #0B0F0F 80px, #222 80px, #222 82px)",

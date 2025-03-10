@@ -35,40 +35,22 @@ export default function FilterBar({
 
   // Industry options
   const industryOptions = [
-    "Technology",
-    "Healthcare",
-    "Education",
-    "Finance",
-    "E-commerce",
-    "Entertainment",
-    "Travel",
-    "Food & Beverage",
-    "Real Estate",
-    "Manufacturing",
+    "Food",
+    "Fashion",
+    "Health",
+    "Electronics"
   ];
 
   // Format options
   const formatOptions = [
-    "Landing Page",
-    "Dashboard",
-    "Blog",
-    "E-commerce",
-    "Portfolio",
-    "Documentation",
-    "Admin Panel",
-    "Mobile App",
+    "Feed",
+    "Story"
   ];
 
   // Language options
   const languageOptions = [
-    "React",
-    "Next.js",
-    "Vue",
-    "Angular",
-    "Svelte",
-    "Node.js",
-    "Python",
-    "PHP",
+    "LT",
+    "EN"
   ];
 
   return (
@@ -127,7 +109,7 @@ export default function FilterBar({
 
       {/* Language Filter */}
       <div className="filter-section">
-        <h3 className="filter-section-title">Language/Framework</h3>
+        <h3 className="filter-section-title">Language</h3>
         <div className="space-y-2">
           {languageOptions.map((language) => (
             <div

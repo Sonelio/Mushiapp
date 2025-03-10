@@ -193,20 +193,20 @@ export default function AccountPage() {
         background: "repeating-radial-gradient(circle at center, #0B0F0F 0, #0B0F0F 80px, #222 80px, #222 82px)",
       }}
     >
-      <div className="bg-[#0e1814]/90 backdrop-blur-md rounded-xl p-8 w-full max-w-md shadow-lg border border-white/10">
+      <div className="p-8 rounded-md w-full max-w-sm" style={{ backgroundColor: "#20382E" }}>
         {/* User Avatar with Upload Option */}
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center mb-6">
           <div className="relative group">
             <img
               src={photoURL || "/default-avatar.png"}
               alt="Profile"
-              className="h-24 w-24 rounded-full border-2 border-[#11231C] object-cover mb-4"
+              className="h-24 w-24 rounded-full border-2 border-[#2C4C3E] object-cover mb-4"
             />
             <div 
               className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
               onClick={triggerFileInput}
             >
-              <span className="text-white text-sm">Change</span>
+              <span className="text-[#D6E7D3] text-sm">Change</span>
             </div>
             <input 
               ref={fileInputRef}
@@ -216,53 +216,52 @@ export default function AccountPage() {
               onChange={handleImageUpload}
             />
           </div>
-          {isUploading && <p className="text-xs text-gray-300 mb-2">Uploading...</p>}
-          <h1 className="text-2xl font-bold">{displayName || "User"}</h1>
-          <p className="text-gray-400 text-sm">{userData.email}</p>
+          {isUploading && <p className="text-xs text-[#9DB396] mb-2">Uploading...</p>}
+          <h1 className="text-2xl font-bold text-[#D6E7D3]">{displayName || "User"}</h1>
+          <p className="text-[#9DB396] text-sm">{userData.email}</p>
         </div>
 
         {/* Profile Form */}
-        <form onSubmit={handleSave} className="space-y-4 mt-6">
+        <form onSubmit={handleSave} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">
+            <label className="block text-sm font-medium text-[#9DB396] mb-1">
               Display Name
             </label>
             <input
               type="text"
-              className="w-full bg-[#0A1910] border border-[#11231C] rounded-md px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#11231C]"
+              className="w-full bg-[#2C4C3E] text-[#D6E7D3] placeholder-[#6A806F] border border-[#2C4C3E] 
+                       rounded-md px-4 py-2 focus:outline-none focus:border-[#67C97E]"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
             />
           </div>
 
           {/* Upload Image Button */}
-          <div>
-            <button
-              type="button"
-              onClick={triggerFileInput}
-              className="w-full bg-[#11231C] px-4 py-2 rounded-md hover:bg-[#0A1910] transition flex items-center justify-center border border-white/10"
+          <button
+            type="button"
+            onClick={triggerFileInput}
+            className="w-full bg-[#2C4C3E] text-[#D6E7D3] px-4 py-2 rounded-md hover:bg-[#2F6E3F] transition flex items-center justify-center"
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5 mr-2" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
             >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-5 w-5 mr-2" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" 
-                />
-              </svg>
-              Change Profile Picture
-            </button>
-          </div>
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" 
+              />
+            </svg>
+            Change Profile Picture
+          </button>
 
           <button
             type="submit"
-            className="w-full bg-[#0e1814] hover:bg-[#0e1814]/80 text-white px-4 py-2 rounded-md transition border border-white/20"
+            className="w-full bg-[#2F6E3F] hover:bg-[#2D6B39] text-[#D6E7D3] py-2 rounded-md font-semibold"
           >
             Save Changes
           </button>
@@ -274,7 +273,7 @@ export default function AccountPage() {
           <button
             type="button"
             onClick={handlePasswordReset}
-            className="w-full bg-[#11231C] text-white px-4 py-2 rounded-md hover:bg-[#0A1910] transition border border-white/10"
+            className="w-full bg-[#2C4C3E] text-[#D6E7D3] px-4 py-2 rounded-md hover:bg-[#2F6E3F] transition"
           >
             Reset Password
           </button>
@@ -283,7 +282,7 @@ export default function AccountPage() {
           <button
             type="button"
             onClick={handleLogout}
-            className="w-full bg-[#0e1814] text-white px-4 py-2 rounded-md hover:bg-red-900/30 transition border border-red-900/30"
+            className="w-full bg-[#2C4C3E] text-[#D6E7D3] px-4 py-2 rounded-md hover:bg-red-900/50 transition"
           >
             Log Out
           </button>

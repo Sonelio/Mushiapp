@@ -2,183 +2,172 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useAuth } from '../lib/useAuth';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+
+interface User {
+  photoURL?: string;
+  displayName?: string;
+}
 
 export default function Navbar() {
-  const { user, loading } = useAuth();
+  const { user, loading } = useAuth() as { user: User | null; loading: boolean };
   const router = useRouter();
-  const [isMobile, setIsMobile] = useState(false);
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Handle mobile detection
-  useEffect(() => {
-    const handleResize = () => {
-      if (typeof window !== 'undefined') {
-        setIsMobile(window.innerWidth < 768);
-      }
-    };
+  const isTemplatesActive = pathname === '/membership';
 
-    // Set initial value
-    handleResize();
-
-    // Add event listener
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }
-  }, []);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const ProfileImage = () => (
+    <div className="w-14 h-14 rounded-[15px] bg-gray-400 overflow-hidden">
+      {user?.photoURL ? (
+        <Image
+          src={user.photoURL}
+          alt="Profile"
+          width={40}
+          height={40}
+          className="w-full h-full object-cover"
+        />
+      ) : (
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="h-full w-full text-gray-600" 
+          viewBox="0 0 20 20" 
+          fill="currentColor"
+        >
+          <path 
+            fillRule="evenodd" 
+            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" 
+            clipRule="evenodd" 
+          />
+        </svg>
+      )}
+    </div>
+  );
 
   return (
-    <nav className="bg-[#0e1814]/90 backdrop-blur-md fixed w-full z-50 top-0 border-b border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          {/* Logo and brand */}
-          <div className="flex-shrink-0 flex items-center">
-            <Link href="/" className="text-white text-xl font-bold">
-              Mushi
-            </Link>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-4">
-            {user ? (
-              <>
-                <Link
-                  href="/dashboard"
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Dashboard
+    <div className="fixed w-full z-50 top-0">
+      <div className="mx-4 my-6">
+        <nav className="bg-[#11231C] rounded-[15px] overflow-hidden">
+          <div className="px-4 sm:px-6">
+            <div className="flex justify-between items-center h-20">
+              {/* Logo */}
+              <div className="flex-shrink-0">
+                <Link href="/" className="text-white text-2xl font-bold">
+                  Mushi
                 </Link>
+              </div>
+
+              {/* Main Navigation - Desktop */}
+              <div className="hidden md:flex items-center space-x-8">
                 <Link
                   href="/membership"
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  className={`text-white text-sm font-medium tracking-wide px-6 py-4 rounded-md transition-colors ${
+                    isTemplatesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
+                  }`}
                 >
-                  Templates
+                  TEMPLATES
                 </Link>
                 <Link
-                  href="/account"
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  href="/courses"
+                  className="text-white text-sm font-medium tracking-wide hover:text-gray-300 transition-colors"
                 >
-                  Account
+                  COURSES
                 </Link>
-              </>
-            ) : (
-              <>
-                <Link
-                  href="/auth/login"
-                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/auth/signup"
-                  className="bg-[#11231C] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-[#0A1910] transition-colors"
-                >
-                  Sign Up
-                </Link>
-              </>
-            )}
-          </div>
+              </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={toggleMenu}
-              className="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-              aria-expanded={isMenuOpen}
-            >
-              <span className="sr-only">Open main menu</span>
-              {/* Menu icon */}
-              {!isMenuOpen ? (
-                <svg
-                  className="block h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className="block h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
+              {/* Account Section - Desktop */}
+              <div className="hidden md:flex items-center space-x-3">
+                <Link href="/account" className="flex items-center space-x-2">
+                  <ProfileImage />
+                  <div className="flex flex-col items-end">
+                    <span className="text-white text-sm">Account</span>
+                    <span className="text-gray-400 text-xs">{user?.displayName || 'Guest'}</span>
+                  </div>
+                </Link>
+              </div>
 
-      {/* Mobile menu */}
-      <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          {user ? (
-            <>
-              <Link
-                href="/dashboard"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Dashboard
-              </Link>
-              <Link
-                href="/membership"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Templates
-              </Link>
-              <Link
-                href="/account"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Account
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link
-                href="/auth/login"
-                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Login
-              </Link>
-              <Link
-                href="/auth/signup"
-                className="bg-[#11231C] text-white block px-3 py-2 rounded-md text-base font-medium hover:bg-[#0A1910] transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Sign Up
-              </Link>
-            </>
-          )}
-        </div>
+              {/* Mobile menu button */}
+              <div className="md:hidden flex items-center">
+                <button
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white p-2"
+                >
+                  <span className="sr-only">Open main menu</span>
+                  {!isMenuOpen ? (
+                    <svg
+                      className="block h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="block h-6 w-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Mobile menu */}
+            <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
+              <div className="px-2 pt-2 pb-3 space-y-1 border-t border-gray-700">
+                {/* Account Section - Mobile */}
+                <Link 
+                  href="/account" 
+                  className="flex items-center space-x-2 px-3 py-2 text-white"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <ProfileImage />
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium">Account</span>
+                    <span className="text-gray-400 text-xs">{user?.displayName || 'Guest'}</span>
+                  </div>
+                </Link>
+
+                {/* Navigation Links - Mobile */}
+                <Link
+                  href="/membership"
+                  className={`block px-3 py-2 text-white text-sm font-medium tracking-wide rounded-md transition-colors ${
+                    isTemplatesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  TEMPLATES
+                </Link>
+                <Link
+                  href="/courses"
+                  className="block px-3 py-2 text-white text-sm font-medium tracking-wide hover:bg-gray-700 rounded-md"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  COURSES
+                </Link>
+              </div>
+            </div>
+          </div>
+        </nav>
       </div>
-    </nav>
+    </div>
   );
 }

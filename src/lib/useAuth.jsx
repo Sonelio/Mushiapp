@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
-import { auth, db } from "./firebaseConfig"; // Adjust path
+import { auth, db } from "./firebase"; // Fixed import path
 
 // A simple context storing user & loading state
 const AuthContext = createContext({
@@ -19,31 +19,81 @@ export function AuthProvider({ children }) {
   });
 
   useEffect(() => {
-    // Listen to Firebase Auth
+    let unsubscribeUser = null;
+    let retryCount = 0;
+    const MAX_RETRIES = 3;
+    const RETRY_DELAY = 2000; // 2 seconds
+
+    const setupFirestoreListener = (firebaseUser, attempt = 0) => {
+      if (attempt >= MAX_RETRIES) {
+        console.error("Max retries reached for Firestore listener");
+        setAuthState({ user: firebaseUser, loading: false });
+        return null;
+      }
+
+      try {
+        const userRef = doc(db, "users", firebaseUser.uid);
+        return onSnapshot(
+          userRef,
+          {
+            next: (docSnap) => {
+              if (docSnap.exists()) {
+                const userData = docSnap.data();
+                setAuthState({
+                  user: { ...firebaseUser, ...userData },
+                  loading: false,
+                });
+              } else {
+                setAuthState({ user: firebaseUser, loading: false });
+              }
+            },
+            error: (error) => {
+              console.error("Firestore listener error:", error);
+              // Clear the current listener
+              if (unsubscribeUser) {
+                unsubscribeUser();
+                unsubscribeUser = null;
+              }
+              
+              // Retry after delay
+              setTimeout(() => {
+                unsubscribeUser = setupFirestoreListener(firebaseUser, attempt + 1);
+              }, RETRY_DELAY);
+            }
+          }
+        );
+      } catch (error) {
+        console.error("Error setting up Firestore listener:", error);
+        return null;
+      }
+    };
+
     const unsubscribeAuth = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
-        // If logged in, also listen for Firestore doc changes in /users/{uid}
-        const userRef = doc(db, "users", firebaseUser.uid);
-        const unsubscribeUser = onSnapshot(userRef, (docSnap) => {
-          if (docSnap.exists()) {
-            // Merge the firebaseUser object with Firestore doc data
-            setAuthState({
-              user: { ...firebaseUser, ...docSnap.data() },
-              loading: false,
-            });
-          } else {
-            // If no doc found, just store firebaseUser
-            setAuthState({ user: firebaseUser, loading: false });
-          }
-        });
-        return () => unsubscribeUser();
+        // Clear any existing Firestore listener
+        if (unsubscribeUser) {
+          unsubscribeUser();
+          unsubscribeUser = null;
+        }
+
+        // Set up new Firestore listener
+        unsubscribeUser = setupFirestoreListener(firebaseUser);
       } else {
-        // Not logged in => reset to null
+        // Not logged in
+        if (unsubscribeUser) {
+          unsubscribeUser();
+          unsubscribeUser = null;
+        }
         setAuthState({ user: null, loading: false });
       }
     });
 
-    return () => unsubscribeAuth();
+    return () => {
+      if (unsubscribeUser) {
+        unsubscribeUser();
+      }
+      unsubscribeAuth();
+    };
   }, []);
 
   // Provide { user, loading } to the rest of the app
@@ -56,5 +106,7 @@ export function AuthProvider({ children }) {
 
 // useAuth() hook reads the AuthContext
 export function useAuth() {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  console.log("useAuth hook called, current state:", context);
+  return context;
 }
