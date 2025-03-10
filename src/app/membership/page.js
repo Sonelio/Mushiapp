@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { useAuth } from "../../lib/useAuth";
 import { useRouter } from "next/navigation";
 import {
@@ -19,6 +19,7 @@ export default function MembershipPage() {
   const router = useRouter();
   const [templates, setTemplates] = useState([]);
   const [fetchingTemplates, setFetchingTemplates] = useState(true);
+  const [error, setError] = useState(null);
   const [userSavedTemplates, setUserSavedTemplates] = useState([]);
 
   const [sortOption, setSortOption] = useState("popular");
@@ -138,45 +139,64 @@ export default function MembershipPage() {
     }
   };
 
-  // Apply filtering based on selected filters:
-  let filteredTemplates = templates.filter((template) => {
-    const industryMatch =
-      selectedIndustry.length === 0 || selectedIndustry.includes(template.category);
-    const formatMatch =
-      selectedFormat.length === 0 || selectedFormat.includes(template.format);
-    const languageMatch =
-      selectedLanguage.length === 0 || selectedLanguage.includes(template.language);
-    return industryMatch && formatMatch && languageMatch;
-  });
+  // Memoize filtered and sorted templates
+  const sortedTemplates = useMemo(() => {
+    // First filter the templates
+    let filtered = templates.filter((template) => {
+      const industryMatch =
+        selectedIndustry.length === 0 || selectedIndustry.includes(template.category);
+      const formatMatch =
+        selectedFormat.length === 0 || selectedFormat.includes(template.format);
+      const languageMatch =
+        selectedLanguage.length === 0 || selectedLanguage.includes(template.language);
+      return industryMatch && formatMatch && languageMatch;
+    });
 
-  // If sort option is "saved", only include saved templates.
-  if (sortOption === "saved") {
-    filteredTemplates = filteredTemplates.filter((template) =>
-      userSavedTemplates.includes(template.id)
-    );
-  }
-
-  // Sort the filtered templates properly
-  const sortedTemplates = [...filteredTemplates].sort((a, b) => {
-    switch (sortOption) {
-      case "newest":
-        return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0);
-      case "oldest":
-        return (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0);
-      case "popular":
-      case "saved": // For saved, we also sort by popularity (saved ones only)
-      default:
-        return (b.popularity || 0) - (a.popularity || 0);
+    // If sort option is "saved", only include saved templates
+    if (sortOption === "saved") {
+      filtered = filtered.filter((template) =>
+        userSavedTemplates.includes(template.id)
+      );
     }
-  });
+
+    // Sort the filtered templates
+    return filtered.sort((a, b) => {
+      switch (sortOption) {
+        case "newest":
+          return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0);
+        case "oldest":
+          return (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0);
+        case "popular":
+        case "saved":
+        default:
+          return (b.popularity || 0) - (a.popularity || 0);
+      }
+    });
+  }, [templates, selectedIndustry, selectedFormat, selectedLanguage, sortOption, userSavedTemplates]);
 
   // Get total active filter count
   const activeFilterCount = selectedIndustry.length + selectedFormat.length + selectedLanguage.length;
 
   if (loading || fetchingTemplates) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-white">
-        <p>Loading...</p>
+      <div className="min-h-screen flex flex-col items-center justify-center text-white space-y-4">
+        <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-lg">Loading templates...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center text-white space-y-4">
+        <div className="text-red-500 text-xl">⚠️ Error loading templates</div>
+        <p className="text-gray-400">{error}</p>
+        <button 
+          onClick={() => window.location.reload()} 
+          className="px-4 py-2 bg-white text-black rounded-md hover:bg-gray-200 transition-colors"
+        >
+          Try Again
+        </button>
       </div>
     );
   }
@@ -286,124 +306,135 @@ export default function MembershipPage() {
       </div>
 
       {/* BOTTOM CONTROLS BAR - Contains both Filter and Sort */}
-      <div className="fixed bottom-4 flex gap-3 z-20 w-full px-4">
-{/* FILTER CONTROL - Left side */}
-<div className="hidden md:flex">
-  <div className="bg-[#0e1814]/90 backdrop-blur-md p-3 flex items-center shadow-md rounded-lg">
-    <div className="relative">
-      <button
-        onClick={() => setDesktopFilterOpen(!desktopFilterOpen)}
-        className="bg-[#0e1814] hover:bg-[#0e1814]/80 text-white px-4 py-2 rounded-md flex items-center space-x-2"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 010 2H4a1 1 0 01-1-1zm3 6a1 1 0 011-1h10a1 1 0 010 2H7a1 1 0 01-1-1zm4 6a1 1 0 011-1h4a1 1 0 010 2h-4a1 1 0 01-1-1z" />
-        </svg>
-        <span>Filter</span>
-        {activeFilterCount > 0 && (
-          <span className="ml-1 bg-[#11231C] px-1.5 py-0.5 rounded-full text-xs">
-            {activeFilterCount}
-          </span>
-        )}
-        <span className="ml-1">{desktopFilterOpen ? "▲" : "▼"}</span>
-      </button>
-      
-      {/* Simplified filter dropdown */}
-      {desktopFilterOpen && (
-        <div className="absolute bottom-full left-0 mb-2 w-72 bg-[#11231C] text-white rounded-md shadow-lg z-30">
-          <div className="p-4">
-            <div className="flex justify-between items-center mb-3">
-              <h3 className="font-medium">Filters</h3>
-              {activeFilterCount > 0 && (
-                <div className="flex gap-2">
-                  <span className="text-xs text-gray-400">
-                    {activeFilterCount} selected
+      <div className="fixed bottom-4 flex gap-3 z-20 w-full px-4" role="toolbar" aria-label="Template controls">
+        {/* FILTER CONTROL - Left side */}
+        <div className="hidden md:flex">
+          <div className="bg-[#0e1814]/90 backdrop-blur-md p-3 flex items-center shadow-md rounded-lg">
+            <div className="relative">
+              <button
+                onClick={() => setDesktopFilterOpen(!desktopFilterOpen)}
+                className="bg-[#0e1814] hover:bg-[#0e1814]/80 text-white px-4 py-2 rounded-md flex items-center space-x-2"
+                aria-expanded={desktopFilterOpen}
+                aria-controls="filter-dropdown"
+                aria-label="Filter templates"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 010 2H4a1 1 0 01-1-1zm3 6a1 1 0 011-1h10a1 1 0 010 2H7a1 1 0 01-1-1zm4 6a1 1 0 011-1h4a1 1 0 010 2h-4a1 1 0 01-1-1z" />
+                </svg>
+                <span>Filter</span>
+                {activeFilterCount > 0 && (
+                  <span className="ml-1 bg-[#11231C] px-1.5 py-0.5 rounded-full text-xs" role="status">
+                    {activeFilterCount}
                   </span>
-                  <button 
-                    onClick={() => {
-                      setSelectedIndustry([]);
-                      setSelectedFormat([]);
-                      setSelectedLanguage([]);
-                    }}
-                    className="text-xs text-gray-400 hover:text-white"
-                  >
-                    Clear all
-                  </button>
+                )}
+                <span className="ml-1" aria-hidden="true">{desktopFilterOpen ? "▲" : "▼"}</span>
+              </button>
+              
+              {/* Filter dropdown */}
+              {desktopFilterOpen && (
+                <div 
+                  id="filter-dropdown"
+                  className="absolute bottom-full left-0 mb-2 w-72 bg-[#11231C] text-white rounded-md shadow-lg z-30"
+                  role="dialog"
+                  aria-label="Filter options"
+                >
+                  <div className="p-4">
+                    <div className="flex justify-between items-center mb-3">
+                      <h3 className="font-medium">Filters</h3>
+                      {activeFilterCount > 0 && (
+                        <div className="flex gap-2">
+                          <span className="text-xs text-gray-400">
+                            {activeFilterCount} selected
+                          </span>
+                          <button 
+                            onClick={() => {
+                              setSelectedIndustry([]);
+                              setSelectedFormat([]);
+                              setSelectedLanguage([]);
+                            }}
+                            className="text-xs text-gray-400 hover:text-white"
+                          >
+                            Clear all
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <style jsx>{`
+                      /* Ensure the filter sections have a consistent background color */
+                      :global(.filter-section) {
+                        background-color: #11231C !important;
+                        padding: 0.5rem 0 !important;
+                        margin-bottom: 0.5rem !important;
+                        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+                      }
+                      :global(.filter-section:last-child) {
+                        border-bottom: none !important;
+                        margin-bottom: 0 !important;
+                      }
+                      :global(.filter-section *) {
+                        background-color: transparent !important;
+                      }
+                      :global(.filter-option) {
+                        transition: background-color 0.15s ease;
+                      }
+                      :global(.filter-option:hover) {
+                        background-color: rgba(10, 25, 16, 0.7) !important;
+                      }
+                      :global(.filter-option.selected) {
+                        background-color: #0A1910 !important;
+                      }
+                      :global(.filter-section-title) {
+                        font-size: 0.8rem !important;
+                        font-weight: 500 !important;
+                        margin-bottom: 0.5rem !important;
+                        color: rgba(255, 255, 255, 0.7) !important;
+                      }
+                    `}</style>
+                    
+                    <div className="max-h-[40vh] overflow-y-auto pr-2">
+                      <FilterBar
+                        selectedIndustry={selectedIndustry}
+                        setSelectedIndustry={setSelectedIndustry}
+                        selectedFormat={selectedFormat}
+                        setSelectedFormat={setSelectedFormat}
+                        selectedLanguage={selectedLanguage}
+                        setSelectedLanguage={setSelectedLanguage}
+                        embedded={true}
+                      />
+                    </div>
+                    
+                    <div className="mt-4 flex justify-end">
+                      <button 
+                        onClick={() => setDesktopFilterOpen(false)}
+                        className="bg-[#0e1814] hover:bg-[#0e1814]/80 text-white px-4 py-1.5 rounded text-sm"
+                      >
+                        Apply Filters
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
-            
-            <style jsx>{`
-              /* Ensure the filter sections have a consistent background color */
-              :global(.filter-section) {
-                background-color: #11231C !important;
-                padding: 0.5rem 0 !important;
-                margin-bottom: 0.5rem !important;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-              }
-              :global(.filter-section:last-child) {
-                border-bottom: none !important;
-                margin-bottom: 0 !important;
-              }
-              :global(.filter-section *) {
-                background-color: transparent !important;
-              }
-              :global(.filter-option) {
-                transition: background-color 0.15s ease;
-              }
-              :global(.filter-option:hover) {
-                background-color: rgba(10, 25, 16, 0.7) !important;
-              }
-              :global(.filter-option.selected) {
-                background-color: #0A1910 !important;
-              }
-              :global(.filter-section-title) {
-                font-size: 0.8rem !important;
-                font-weight: 500 !important;
-                margin-bottom: 0.5rem !important;
-                color: rgba(255, 255, 255, 0.7) !important;
-              }
-            `}</style>
-            
-            <div className="max-h-[40vh] overflow-y-auto pr-2">
-              <FilterBar
-                selectedIndustry={selectedIndustry}
-                setSelectedIndustry={setSelectedIndustry}
-                selectedFormat={selectedFormat}
-                setSelectedFormat={setSelectedFormat}
-                selectedLanguage={selectedLanguage}
-                setSelectedLanguage={setSelectedLanguage}
-                embedded={true}
-              />
-            </div>
-            
-            <div className="mt-4 flex justify-end">
-              <button 
-                onClick={() => setDesktopFilterOpen(false)}
-                className="bg-[#0e1814] hover:bg-[#0e1814]/80 text-white px-4 py-1.5 rounded text-sm"
-              >
-                Apply Filters
-              </button>
-            </div>
           </div>
         </div>
-      )}
-    </div>
-  </div>
-</div>
 
         {/* MOBILE FILTER BUTTON and RIGHT-SIDE CONTROLS */}
         <div className="flex flex-wrap items-center gap-3 ml-auto">
-          {/* MOBILE FILTER BUTTON - Only visible on mobile */}
+          {/* MOBILE FILTER BUTTON */}
           <button 
             onClick={() => setFilterOpen(true)}
             className="md:hidden bg-[#0e1814] hover:bg-[#0e1814]/80 text-white px-3 py-2 rounded-lg shadow-lg flex items-center space-x-2"
+            aria-expanded={filterOpen}
+            aria-controls="mobile-filter-panel"
+            aria-label="Open filter panel"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 010 2H4a1 1 0 01-1-1zm3 6a1 1 0 011-1h10a1 1 0 010 2H7a1 1 0 01-1-1zm4 6a1 1 0 011-1h4a1 1 0 010 2h-4a1 1 0 01-1-1z" />
             </svg>
             <span>Filter</span>
             {activeFilterCount > 0 && (
-              <span className="ml-1 bg-[#11231C] px-1.5 py-0.5 rounded-full text-xs">
+              <span className="ml-1 bg-[#11231C] px-1.5 py-0.5 rounded-full text-xs" role="status">
                 {activeFilterCount}
               </span>
             )}
@@ -411,20 +442,28 @@ export default function MembershipPage() {
 
           {/* SORT DROPDOWN & CARD COUNT */}
           <div className="bg-[#0e1814]/90 backdrop-blur-md p-3 flex items-center space-x-4 shadow-md rounded-lg">
-            <span className="text-sm text-gray-200 hidden sm:inline">
+            <span className="text-sm text-gray-200 hidden sm:inline" role="status">
               {sortedTemplates.length} results
             </span>
             <div className="relative">
               <button
                 onClick={() => setSortOpen(!sortOpen)}
                 className="bg-[#0e1814] hover:bg-[#0e1814]/80 text-white px-4 py-2 rounded-md flex items-center"
+                aria-expanded={sortOpen}
+                aria-controls="sort-dropdown"
+                aria-label="Sort templates"
               >
                 <span className="hidden sm:inline">Sort By </span>
                 <span>{sortOption.charAt(0).toUpperCase() + sortOption.slice(1)}</span>
-                <span className="ml-1">{sortOpen ? "▲" : "▼"}</span>
+                <span className="ml-1" aria-hidden="true">{sortOpen ? "▲" : "▼"}</span>
               </button>
               {sortOpen && (
-                <div className="absolute bottom-full right-0 mb-2 w-40 bg-[#0e1814] text-white rounded-md shadow-lg z-10">
+                <div 
+                  id="sort-dropdown"
+                  className="absolute bottom-full right-0 mb-2 w-40 bg-[#0e1814] text-white rounded-md shadow-lg z-10"
+                  role="listbox"
+                  aria-label="Sort options"
+                >
                   {["popular", "newest", "oldest", "saved"].map((option) => (
                     <button
                       key={option}
@@ -434,7 +473,9 @@ export default function MembershipPage() {
                       }}
                       className={`block px-4 py-2 w-full text-left hover:bg-[#122017] ${
                         sortOption === option ? "bg-[#122017]" : ""
-                      }`}                  
+                      }`}
+                      role="option"
+                      aria-selected={sortOption === option}
                     >
                       {option.charAt(0).toUpperCase() + option.slice(1)}
                     </button>
@@ -445,23 +486,24 @@ export default function MembershipPage() {
           </div>
 
           {/* Support button */}
-<button 
-  onClick={() => {
-    // If you've added the toast component
-    if (typeof addToast === 'function') {
-      addToast("Support chat will be available soon!", TOAST_TYPES.INFO);
-    }
-    
-    // You can also open a mailto link
-    window.open("mailto:nojus@mushi.agency?subject=Support Request");
-  }}
-  className="bg-[#0e1814] hover:bg-[#0e1814]/80 text-white px-5 py-3 rounded-full shadow-lg transition-colors duration-200"
->
-  <span className="hidden sm:inline">Support</span>
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-</button>
+          <button 
+            onClick={() => {
+              // If you've added the toast component
+              if (typeof addToast === 'function') {
+                addToast("Support chat will be available soon!", TOAST_TYPES.INFO);
+              }
+              
+              // You can also open a mailto link
+              window.open("mailto:nojus@mushi.agency?subject=Support Request");
+            }}
+            className="bg-[#0e1814] hover:bg-[#0e1814]/80 text-white px-5 py-3 rounded-full shadow-lg transition-colors duration-200"
+            aria-label="Contact support"
+          >
+            <span className="hidden sm:inline">Support</span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>

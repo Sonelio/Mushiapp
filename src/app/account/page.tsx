@@ -2,11 +2,18 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../lib/useAuth";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc, DocumentData } from "firebase/firestore";
 import { sendPasswordResetEmail, signOut } from "firebase/auth";
 import { db, auth, storage } from "../../lib/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/navigation";
+
+interface UserData extends DocumentData {
+  email?: string;
+  name?: string;
+  savedTemplates?: string[];
+  // Add other user fields as needed
+}
 
 export default function AccountPage() {
   const { user, loading } = useAuth();
@@ -16,6 +23,8 @@ export default function AccountPage() {
   const [photoURL, setPhotoURL] = useState("");
   const [isLoadingUserDoc, setIsLoadingUserDoc] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [error, setError] = useState<string | null>(null);
   
   const fileInputRef = useRef(null);
 
@@ -30,22 +39,26 @@ export default function AccountPage() {
 
   const fetchUserDoc = async () => {
     try {
+      if (!user) {
+        setError("No user found");
+        setLoading(false);
+        return;
+      }
+
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
+      
       if (userSnap.exists()) {
-        const userData = userSnap.data();
-        setDisplayName(userData.displayName || "");
-        setPhotoURL(userData.photoURL || "");
+        const data = userSnap.data() as UserData;
+        setUserData(data);
+        setDisplayName(data.displayName || "");
+        setPhotoURL(data.photoURL || "");
       } else {
-        await setDoc(userRef, {
-          email: user.email,
-          createdAt: new Date(),
-          displayName: "",
-          photoURL: "",
-        });
+        setError("User document not found");
       }
     } catch (error) {
-      console.error("Error fetching user doc:", error);
+      setError(error instanceof Error ? error.message : "An error occurred");
+      console.error("Error fetching user document:", error);
     } finally {
       setIsLoadingUserDoc(false);
     }
@@ -129,8 +142,25 @@ export default function AccountPage() {
 
   if (loading || isLoadingUserDoc) {
     return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center text-white space-y-4">
+        <div className="text-red-500 text-xl">⚠️ Error</div>
+        <p className="text-gray-400">{error}</p>
+      </div>
+    );
+  }
+
+  if (!userData) {
+    return (
       <div className="min-h-screen flex items-center justify-center text-white">
-        <p>Loading...</p>
+        <p>No user data found</p>
       </div>
     );
   }
@@ -167,7 +197,7 @@ export default function AccountPage() {
           </div>
           {isUploading && <p className="text-xs text-gray-300 mb-2">Uploading...</p>}
           <h1 className="text-2xl font-bold">{displayName || "User"}</h1>
-          <p className="text-gray-400 text-sm">{user?.email}</p>
+          <p className="text-gray-400 text-sm">{userData.email}</p>
         </div>
 
         {/* Profile Form */}
