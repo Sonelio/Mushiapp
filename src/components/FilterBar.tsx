@@ -1,4 +1,3 @@
-"use client";
 import { useState, useEffect } from "react";
 
 export default function FilterBar({
@@ -8,7 +7,6 @@ export default function FilterBar({
   setSelectedFormat,
   selectedLanguage,
   setSelectedLanguage,
-  embedded = false
 }) {
   const toggleSelection = (value, selectedArray, setSelectedArray) => {
     if (selectedArray.includes(value)) {

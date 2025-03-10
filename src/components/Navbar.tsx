@@ -9,7 +9,6 @@ export default function Navbar() {
   const { user } = useAuth();
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   // Check if we're on a mobile device
   useEffect(() => {

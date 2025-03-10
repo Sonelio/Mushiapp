@@ -25,7 +25,6 @@ export default function MembershipPage() {
   const [sortOpen, setSortOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [desktopFilterOpen, setDesktopFilterOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   const [visibleTemplates, setVisibleTemplates] = useState(20);
   const observer = useRef();
