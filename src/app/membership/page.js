@@ -21,6 +21,7 @@ export default function MembershipPage() {
   const [fetchingTemplates, setFetchingTemplates] = useState(true);
   const [error, setError] = useState(null);
   const [userSavedTemplates, setUserSavedTemplates] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
 
   const [sortOption, setSortOption] = useState("popular");
   const [sortOpen, setSortOpen] = useState(false);
@@ -33,18 +34,23 @@ export default function MembershipPage() {
 
   // Check if we're on a mobile device
   useEffect(() => {
+    // Function to handle resize
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth < 768);
+      }
     };
     
     // Set initial value
     handleResize();
     
     // Add event listener
-    window.addEventListener("resize", handleResize);
-    
-    // Remove event listener on cleanup
-    return () => window.removeEventListener("resize", handleResize);
+    if (typeof window !== 'undefined') {
+      window.addEventListener("resize", handleResize);
+      
+      // Remove event listener on cleanup
+      return () => window.removeEventListener("resize", handleResize);
+    }
   }, []);
 
   // Updated lastTemplateElementRef with better handling

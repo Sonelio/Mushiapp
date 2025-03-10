@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
 import { useAuth } from "../../lib/useAuth";
 import { doc, getDoc, setDoc, updateDoc, DocumentData } from "firebase/firestore";
-import { sendPasswordResetEmail, signOut } from "firebase/auth";
+import { sendPasswordResetEmail, signOut, User } from "firebase/auth";
 import { db, auth, storage } from "../../lib/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/navigation";
@@ -11,8 +11,15 @@ import { useRouter } from "next/navigation";
 interface UserData extends DocumentData {
   email?: string;
   name?: string;
+  displayName?: string;
+  photoURL?: string;
   savedTemplates?: string[];
   // Add other user fields as needed
+}
+
+interface AuthUser extends User {
+  uid: string;
+  email: string | null;
 }
 
 export default function AccountPage() {
@@ -26,7 +33,7 @@ export default function AccountPage() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [error, setError] = useState<string | null>(null);
   
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (loading) return;
@@ -41,11 +48,12 @@ export default function AccountPage() {
     try {
       if (!user) {
         setError("No user found");
-        setLoading(false);
+        setIsLoadingUserDoc(false);  // Use this instead
         return;
       }
 
-      const userRef = doc(db, "users", user.uid);
+      const typedUser = user as AuthUser;
+      const userRef = doc(db, "users", typedUser.uid);
       const userSnap = await getDoc(userRef);
       
       if (userSnap.exists()) {
@@ -54,7 +62,15 @@ export default function AccountPage() {
         setDisplayName(data.displayName || "");
         setPhotoURL(data.photoURL || "");
       } else {
-        setError("User document not found");
+        // Create a new user document if it doesn't exist
+        const newUserData: UserData = {
+          email: typedUser.email || "",
+          displayName: "",
+          photoURL: "",
+          savedTemplates: []
+        };
+        await setDoc(userRef, newUserData);
+        setUserData(newUserData);
       }
     } catch (error) {
       setError(error instanceof Error ? error.message : "An error occurred");
@@ -64,12 +80,13 @@ export default function AccountPage() {
     }
   };
 
-  const handleSave = async (e) => {
+  const handleSave = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!user) return;
 
+    const typedUser = user as AuthUser;
     try {
-      const userRef = doc(db, "users", user.uid);
+      const userRef = doc(db, "users", typedUser.uid);
       await updateDoc(userRef, {
         displayName: displayName.trim(),
         photoURL: photoURL,
@@ -83,8 +100,9 @@ export default function AccountPage() {
 
   const handlePasswordReset = async () => {
     if (!user) return;
+    const typedUser = user as AuthUser;
     try {
-      await sendPasswordResetEmail(auth, user.email);
+      await sendPasswordResetEmail(auth, typedUser.email || "");
       alert("Check your email for password reset instructions.");
     } catch (error) {
       console.error("Error sending password reset email:", error);
@@ -100,10 +118,11 @@ export default function AccountPage() {
     }
   };
 
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (!file || !user) return;
 
+    const typedUser = user as AuthUser;
     try {
       setIsUploading(true);
       
@@ -111,7 +130,7 @@ export default function AccountPage() {
       const filename = `${Date.now()}-${file.name}`;
       
       // Create a reference to the file location in Firebase Storage
-      const storageRef = ref(storage, `profile-images/${user.uid}/${filename}`);
+      const storageRef = ref(storage, `profile-images/${typedUser.uid}/${filename}`);
       
       // Upload the file
       const snapshot = await uploadBytes(storageRef, file);
@@ -123,7 +142,7 @@ export default function AccountPage() {
       setPhotoURL(downloadURL);
       
       // Update the user document immediately
-      const userRef = doc(db, "users", user.uid);
+      const userRef = doc(db, "users", typedUser.uid);
       await updateDoc(userRef, {
         photoURL: downloadURL,
       });
@@ -137,7 +156,9 @@ export default function AccountPage() {
   };
 
   const triggerFileInput = () => {
-    fileInputRef.current.click();
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   if (loading || isLoadingUserDoc) {

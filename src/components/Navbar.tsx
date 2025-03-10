@@ -1,158 +1,184 @@
 "use client";
 
-import Link from "next/link";
-import { useAuth } from "../lib/useAuth";
-import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useAuth } from '../lib/useAuth';
+import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
-  const { user } = useAuth();
-  const pathname = usePathname();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, loading } = useAuth();
+  const router = useRouter();
+  const [isMobile, setIsMobile] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Check if we're on a mobile device
+  // Handle mobile detection
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth < 768);
+      }
     };
-    
+
     // Set initial value
     handleResize();
-    
+
     // Add event listener
-    window.addEventListener("resize", handleResize);
-    
-    // Remove event listener on cleanup
-    return () => window.removeEventListener("resize", handleResize);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
   }, []);
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <div className="w-full px-2 py-3">
-      <nav className="bg-[#11231C] text-white p-4 flex justify-between items-center shadow-md rounded-[15px] border-2 border-black w-full max-w-[98%] mx-auto relative z-10">
-        {/* Left: Logo */}
-        <Link href="/" className="text-2xl font-bold ml-2">
-          Mushi
-        </Link>
-
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden flex flex-col space-y-1"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <span className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
-          <span className={`block w-6 h-0.5 bg-white transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-0' : 'opacity-100'}`}></span>
-          <span className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
-        </button>
-
-        {/* Desktop Navigation Links */}
-        <div className="hidden md:flex space-x-6">
-          <Link 
-            href="/membership" 
-            className={`px-3 py-2 rounded-md transition ${
-              pathname?.includes("/membership") 
-                ? "bg-[#0e1814] text-white" 
-                : "hover:bg-[#0e1814]/30 hover:text-gray-200"
-            }`}
-          >
-            Templates
-          </Link>
-          <Link 
-            href="/courses" 
-            className={`px-3 py-2 rounded-md transition ${
-              pathname?.includes("/courses") 
-                ? "bg-[#0e1814] text-white" 
-                : "hover:bg-[#0e1814]/30 hover:text-gray-200"
-            }`}
-          >
-            Courses
-          </Link>
-        </div>
-
-        {/* Desktop Profile Section */}
-        <div className="hidden md:block">
-          {user ? (
-            <Link href="/account" className="flex items-center space-x-3 hover:bg-[#0e1814] px-3 py-2 rounded-md transition mr-2">
-              {/* User Profile Image */}
-              <img
-                src={user.photoURL || "/default-avatar.png"}
-                alt="Profile"
-                className="h-10 w-10 rounded-full object-cover border border-gray-400"
-              />
-              {/* Name & Account Label */}
-              <div className="text-left">
-                <p className="text-sm font-semibold">Account</p>
-                <p className="text-xs text-gray-300">{user.displayName || "User"}</p>
-              </div>
+    <nav className="bg-[#0e1814]/90 backdrop-blur-md fixed w-full z-50 top-0 border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          {/* Logo and brand */}
+          <div className="flex-shrink-0 flex items-center">
+            <Link href="/" className="text-white text-xl font-bold">
+              Mushi
             </Link>
-          ) : (
-            <Link href="/auth/login" className="bg-blue-600 px-5 py-2 rounded-full text-white hover:bg-blue-700 mr-2">
-              Login
-            </Link>
-          )}
-        </div>
-      </nav>
+          </div>
 
-      {/* Mobile Menu (Slides down when open) */}
-      <div 
-        className={`bg-[#11231C] text-white shadow-md rounded-b-[15px] border-2 border-t-0 border-black w-full max-w-[98%] mx-auto overflow-hidden transition-all duration-300 ${
-          isMobileMenuOpen ? 'max-h-60' : 'max-h-0'
-        } md:hidden`}
-      >
-        <div className="p-4 space-y-3">
-          <Link 
-            href="/membership" 
-            className={`block px-3 py-2 rounded-md transition ${
-              pathname?.includes("/membership") 
-                ? "bg-[#0e1814] text-white" 
-                : "hover:bg-[#0e1814]/30 hover:text-gray-200"
-            }`}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Templates
-          </Link>
-          <Link 
-            href="/courses" 
-            className={`block px-3 py-2 rounded-md transition ${
-              pathname?.includes("/courses") 
-                ? "bg-[#0e1814] text-white" 
-                : "hover:bg-[#0e1814]/30 hover:text-gray-200"
-            }`}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Courses
-          </Link>
-          
-          {/* Mobile Profile Section */}
-          <div className="pt-2 border-t border-gray-700">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex md:items-center md:space-x-4">
             {user ? (
-              <Link 
-                href="/account" 
-                className="flex items-center space-x-3 hover:bg-[#0e1814] px-3 py-2 rounded-md transition"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <img
-                  src={user.photoURL || "/default-avatar.png"}
-                  alt="Profile"
-                  className="h-8 w-8 rounded-full object-cover border border-gray-400"
-                />
-                <div className="text-left">
-                  <p className="text-sm font-semibold">Account</p>
-                  <p className="text-xs text-gray-300">{user.displayName || "User"}</p>
-                </div>
-              </Link>
+              <>
+                <Link
+                  href="/dashboard"
+                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  href="/membership"
+                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Templates
+                </Link>
+                <Link
+                  href="/account"
+                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Account
+                </Link>
+              </>
             ) : (
-              <Link 
-                href="/auth/login" 
-                className="block bg-blue-600 px-5 py-2 rounded-full text-center text-white hover:bg-blue-700"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Login
-              </Link>
+              <>
+                <Link
+                  href="/auth/login"
+                  className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/auth/signup"
+                  className="bg-[#11231C] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-[#0A1910] transition-colors"
+                >
+                  Sign Up
+                </Link>
+              </>
             )}
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden flex items-center">
+            <button
+              onClick={toggleMenu}
+              className="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              aria-expanded={isMenuOpen}
+            >
+              <span className="sr-only">Open main menu</span>
+              {/* Menu icon */}
+              {!isMenuOpen ? (
+                <svg
+                  className="block h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  className="block h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Mobile menu */}
+      <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          {user ? (
+            <>
+              <Link
+                href="/dashboard"
+                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/membership"
+                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Templates
+              </Link>
+              <Link
+                href="/account"
+                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Account
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/auth/login"
+                className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Login
+              </Link>
+              <Link
+                href="/auth/signup"
+                className="bg-[#11231C] text-white block px-3 py-2 rounded-md text-base font-medium hover:bg-[#0A1910] transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 }
