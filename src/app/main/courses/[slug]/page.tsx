@@ -1,13 +1,18 @@
-import LessonClient from './LessonClient';
+// Remove all imports and type definitions
 
-interface PageParams {
-  slug: string;
-}
-
-// Make the page component async to match Next.js App Router expectations
-export default async function LessonPage({ params }: { params: PageParams }) {
-  // Params may be a promise in Next.js App Router, so await it
-  const slug = params.slug;
+// Static page without dynamic parameters
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  // Await the params Promise to get the actual values
+  const { slug } = await params;
   
-  return <LessonClient slug={slug} />;
+  return (
+    <div className="min-h-screen bg-[#0B0F0F] text-white">
+      <h1 className="text-2xl font-bold p-8">Course: {slug}</h1>
+      <p className="p-8">This is a placeholder for the course content.</p>
+    </div>
+  );
 } 
