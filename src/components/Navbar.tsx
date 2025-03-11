@@ -17,7 +17,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const isTemplatesActive = pathname === '/membership';
+  const isTemplatesActive = pathname === '/main/membership';
+  const isCoursesActive = pathname.startsWith('/main/courses');
 
   const ProfileImage = () => (
     <div className="w-14 h-14 rounded-[15px] bg-gray-400 overflow-hidden">
@@ -54,15 +55,22 @@ export default function Navbar() {
             <div className="flex justify-between items-center h-20">
               {/* Logo */}
               <div className="flex-shrink-0">
-                <Link href="/" className="text-white text-2xl font-bold">
-                  Mushi
+                <Link href="/main/membership" className="flex items-center">
+                  <Image
+                    src="/mushi logo.png"
+                    alt="Mushi Logo"
+                    width={120}
+                    height={36}
+                    priority
+                    className="object-contain"
+                  />
                 </Link>
               </div>
 
               {/* Main Navigation - Desktop */}
               <div className="hidden md:flex items-center space-x-8">
                 <Link
-                  href="/membership"
+                  href="/main/membership"
                   className={`text-white text-sm font-medium tracking-wide px-6 py-4 rounded-md transition-colors ${
                     isTemplatesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
                   }`}
@@ -70,8 +78,10 @@ export default function Navbar() {
                   TEMPLATES
                 </Link>
                 <Link
-                  href="/courses"
-                  className="text-white text-sm font-medium tracking-wide hover:text-gray-300 transition-colors"
+                  href="/main/courses"
+                  className={`text-white text-sm font-medium tracking-wide px-6 py-4 rounded-md transition-colors ${
+                    isCoursesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
+                  }`}
                 >
                   COURSES
                 </Link>
@@ -79,7 +89,7 @@ export default function Navbar() {
 
               {/* Account Section - Desktop */}
               <div className="hidden md:flex items-center space-x-3">
-                <Link href="/account" className="flex items-center space-x-2">
+                <Link href="/main/account" className="flex items-center space-x-2">
                   <ProfileImage />
                   <div className="flex flex-col items-end">
                     <span className="text-white text-sm">Account</span>
@@ -135,7 +145,7 @@ export default function Navbar() {
               <div className="px-2 pt-2 pb-3 space-y-1 border-t border-gray-700">
                 {/* Account Section - Mobile */}
                 <Link 
-                  href="/account" 
+                  href="/main/account" 
                   className="flex items-center space-x-2 px-3 py-2 text-white"
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -148,7 +158,7 @@ export default function Navbar() {
 
                 {/* Navigation Links - Mobile */}
                 <Link
-                  href="/membership"
+                  href="/main/membership"
                   className={`block px-3 py-2 text-white text-sm font-medium tracking-wide rounded-md transition-colors ${
                     isTemplatesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
                   }`}
@@ -157,8 +167,10 @@ export default function Navbar() {
                   TEMPLATES
                 </Link>
                 <Link
-                  href="/courses"
-                  className="block px-3 py-2 text-white text-sm font-medium tracking-wide hover:bg-gray-700 rounded-md"
+                  href="/main/courses"
+                  className={`block px-3 py-2 text-white text-sm font-medium tracking-wide rounded-md transition-colors ${
+                    isCoursesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
+                  }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   COURSES

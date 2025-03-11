@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
-import { auth, db } from "./firebase"; // Fixed import path
+import { auth, db } from "./firebaseConfig"; // Correct import path
 
 // A simple context storing user & loading state
 const AuthContext = createContext({

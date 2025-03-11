@@ -11,6 +11,8 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // Specify the source directory
+  distDir: '.next',
 }
 
 module.exports = nextConfig

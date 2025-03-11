@@ -21,6 +21,16 @@ export default function FilterBar({
   setSelectedLanguage,
   embedded = false,
 }: FilterBarProps) {
+  // Calculate total selected items
+  const totalSelected = selectedIndustry.length + selectedFormat.length + selectedLanguage.length;
+
+  // Function to clear all selections
+  const clearAllSelections = () => {
+    setSelectedIndustry([]);
+    setSelectedFormat([]);
+    setSelectedLanguage([]);
+  };
+
   const toggleSelection = (
     value: string,
     selectedArray: string[],
@@ -55,9 +65,22 @@ export default function FilterBar({
 
   return (
     <div className={`space-y-6 ${embedded ? '' : 'p-4'}`}>
+      {/* Clear All Button - Only show in mobile when not embedded and there are selections */}
+      {!embedded && totalSelected > 0 && (
+        <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-700">
+          <span className="text-sm text-gray-400">{totalSelected} selected</span>
+          <button
+            onClick={clearAllSelections}
+            className="text-sm text-gray-400 hover:text-white transition-colors"
+          >
+            Clear all
+          </button>
+        </div>
+      )}
+
       {/* Industry Filter */}
       <div className="filter-section">
-        <h3 className="filter-section-title">Industry</h3>
+        <h3 className="filter-section-title text-gray-300">Industry</h3>
         <div className="space-y-2">
           {industryOptions.map((industry) => (
             <div
@@ -69,11 +92,12 @@ export default function FilterBar({
                   setSelectedIndustry([...selectedIndustry, industry]);
                 }
               }}
-              className={`filter-option cursor-pointer px-3 py-2 rounded-md transition ${
+              className={`filter-option cursor-pointer px-3 py-2 rounded-md transition-colors ${
                 selectedIndustry.includes(industry)
-                  ? "bg-[#0A1910] text-white"
-                  : "text-gray-300 hover:bg-[#0A1910]/70"
+                  ? "bg-[#2F6E3F] text-white font-medium shadow-sm"
+                  : "text-gray-300 hover:bg-[#1a3429]"
               }`}
+              data-selected={selectedIndustry.includes(industry)}
             >
               {industry}
             </div>
@@ -83,7 +107,7 @@ export default function FilterBar({
 
       {/* Format Filter */}
       <div className="filter-section">
-        <h3 className="filter-section-title">Format</h3>
+        <h3 className="filter-section-title text-gray-300">Format</h3>
         <div className="space-y-2">
           {formatOptions.map((format) => (
             <div
@@ -95,11 +119,12 @@ export default function FilterBar({
                   setSelectedFormat([...selectedFormat, format]);
                 }
               }}
-              className={`filter-option cursor-pointer px-3 py-2 rounded-md transition ${
+              className={`filter-option cursor-pointer px-3 py-2 rounded-md transition-colors ${
                 selectedFormat.includes(format)
-                  ? "bg-[#0A1910] text-white"
-                  : "text-gray-300 hover:bg-[#0A1910]/70"
+                  ? "bg-[#2F6E3F] text-white font-medium shadow-sm"
+                  : "text-gray-300 hover:bg-[#1a3429]"
               }`}
+              data-selected={selectedFormat.includes(format)}
             >
               {format}
             </div>
@@ -109,7 +134,7 @@ export default function FilterBar({
 
       {/* Language Filter */}
       <div className="filter-section">
-        <h3 className="filter-section-title">Language</h3>
+        <h3 className="filter-section-title text-gray-300">Language</h3>
         <div className="space-y-2">
           {languageOptions.map((language) => (
             <div
@@ -121,11 +146,12 @@ export default function FilterBar({
                   setSelectedLanguage([...selectedLanguage, language]);
                 }
               }}
-              className={`filter-option cursor-pointer px-3 py-2 rounded-md transition ${
+              className={`filter-option cursor-pointer px-3 py-2 rounded-md transition-colors ${
                 selectedLanguage.includes(language)
-                  ? "bg-[#0A1910] text-white"
-                  : "text-gray-300 hover:bg-[#0A1910]/70"
+                  ? "bg-[#2F6E3F] text-white font-medium shadow-sm"
+                  : "text-gray-300 hover:bg-[#1a3429]"
               }`}
+              data-selected={selectedLanguage.includes(language)}
             >
               {language}
             </div>

@@ -1,12 +1,19 @@
 "use client";
 
 import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
-import { useAuth } from "../../lib/useAuth";
+import { useAuth } from "../../../lib/useAuth";
 import { doc, getDoc, setDoc, updateDoc, DocumentData } from "firebase/firestore";
 import { sendPasswordResetEmail, signOut, User } from "firebase/auth";
-import { db, auth, storage } from "../../lib/firebaseConfig";
+import { db, auth, storage } from "../../../lib/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/navigation";
+import Image from 'next/image';
+import { Poppins } from 'next/font/google';
+
+const poppins = Poppins({
+  weight: ['400', '500', '600'],
+  subsets: ['latin'],
+});
 
 interface UserData extends DocumentData {
   email?: string;
@@ -92,9 +99,10 @@ export default function AccountPage() {
         photoURL: photoURL,
       });
 
-      alert("Profile updated!");
+      alert("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
+      alert("Failed to update profile. Please try again.");
     }
   };
 
@@ -106,6 +114,7 @@ export default function AccountPage() {
       alert("Check your email for password reset instructions.");
     } catch (error) {
       console.error("Error sending password reset email:", error);
+      alert("Failed to send reset email. Please try again.");
     }
   };
 
@@ -163,7 +172,7 @@ export default function AccountPage() {
 
   if (loading || isLoadingUserDoc) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-black">
         <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -171,7 +180,7 @@ export default function AccountPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center text-white space-y-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white space-y-4">
         <div className="text-red-500 text-xl">⚠️ Error</div>
         <p className="text-gray-400">{error}</p>
       </div>
@@ -180,20 +189,37 @@ export default function AccountPage() {
 
   if (!userData) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-white">
+      <div className="min-h-screen flex items-center justify-center bg-black text-white">
         <p>No user data found</p>
       </div>
     );
   }
 
   return (
-    <div 
-      className="min-h-screen flex flex-col items-center justify-center p-6 text-white"
-      style={{
-        background: "repeating-radial-gradient(circle at center, #0B0F0F 0, #0B0F0F 80px, #222 80px, #222 82px)",
-      }}
-    >
-      <div className="p-8 rounded-md w-full max-w-sm" style={{ backgroundColor: "#20382E" }}>
+    <div className={`min-h-screen flex items-center justify-center relative bg-black ${poppins.className}`}>
+      <Image
+        src="/background.png"
+        alt="Background Pattern"
+        fill
+        priority
+        className="object-cover z-0 opacity-30"
+      />
+      <div className="p-8 rounded-[30px] w-full max-w-[450px] relative z-10" style={{ backgroundColor: "#20382E" }}>
+        {/* App Logo */}
+        <div className="flex justify-center mb-8">
+          <Image
+            src="/mushi logo.png"
+            alt="Mushi Logo"
+            width={150}
+            height={45}
+            priority
+          />
+        </div>
+
+        <h2 className="text-center text-[25px] font-medium text-white mb-6">
+          Account Settings
+        </h2>
+
         {/* User Avatar with Upload Option */}
         <div className="flex flex-col items-center mb-6">
           <div className="relative group">
@@ -217,51 +243,22 @@ export default function AccountPage() {
             />
           </div>
           {isUploading && <p className="text-xs text-[#9DB396] mb-2">Uploading...</p>}
-          <h1 className="text-2xl font-bold text-[#D6E7D3]">{displayName || "User"}</h1>
-          <p className="text-[#9DB396] text-sm">{userData.email}</p>
         </div>
 
         {/* Profile Form */}
         <form onSubmit={handleSave} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-[#9DB396] mb-1">
-              Display Name
-            </label>
-            <input
-              type="text"
-              className="w-full bg-[#2C4C3E] text-[#D6E7D3] placeholder-[#6A806F] border border-[#2C4C3E] 
-                       rounded-md px-4 py-2 focus:outline-none focus:border-[#67C97E]"
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-            />
-          </div>
-
-          {/* Upload Image Button */}
-          <button
-            type="button"
-            onClick={triggerFileInput}
-            className="w-full bg-[#2C4C3E] text-[#D6E7D3] px-4 py-2 rounded-md hover:bg-[#2F6E3F] transition flex items-center justify-center"
-          >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              className="h-5 w-5 mr-2" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" 
-              />
-            </svg>
-            Change Profile Picture
-          </button>
+          <input
+            type="text"
+            placeholder="Display Name"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            className="w-full bg-black text-[20px] font-normal text-[#D6E7D3] placeholder-[#6A806F] border border-[#2C4C3E] 
+                     rounded-[10px] px-4 py-2 focus:outline-none focus:border-[#67C97E]"
+          />
 
           <button
             type="submit"
-            className="w-full bg-[#2F6E3F] hover:bg-[#2D6B39] text-[#D6E7D3] py-2 rounded-md font-semibold"
+            className="w-full h-[50px] bg-[#1D6D1E] hover:bg-[#1D6D1E]/90 text-[#D6E7D3] rounded-[10px] font-medium text-[25px]"
           >
             Save Changes
           </button>
@@ -269,24 +266,26 @@ export default function AccountPage() {
 
         {/* Account Management Buttons */}
         <div className="space-y-3 mt-6">
-          {/* Reset Password */}
           <button
             type="button"
             onClick={handlePasswordReset}
-            className="w-full bg-[#2C4C3E] text-[#D6E7D3] px-4 py-2 rounded-md hover:bg-[#2F6E3F] transition"
+            className="w-full h-[50px] bg-[#2C4C3E] hover:bg-[#2C4C3E]/90 text-[#D6E7D3] rounded-[10px] font-medium text-[20px]"
           >
             Reset Password
           </button>
           
-          {/* Log Out */}
           <button
             type="button"
             onClick={handleLogout}
-            className="w-full bg-[#2C4C3E] text-[#D6E7D3] px-4 py-2 rounded-md hover:bg-red-900/50 transition"
+            className="w-full h-[50px] bg-[#2C4C3E] hover:bg-red-900/50 text-[#D6E7D3] rounded-[10px] font-medium text-[20px]"
           >
             Log Out
           </button>
         </div>
+
+        <p className="mt-4 text-center text-[16px] font-normal text-[#9DB396]">
+          {userData.email}
+        </p>
       </div>
     </div>
   );
