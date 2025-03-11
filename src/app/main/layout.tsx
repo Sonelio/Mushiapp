@@ -10,9 +10,9 @@ export default function MainLayout({
 }) {
   return (
     <AuthProvider>
-      <div>
+      <div style={{ backgroundColor: 'black', minHeight: '100vh' }} className="bg-black">
         <Navbar />
-        <main className="pt-24 pb-10 px-4">
+        <main style={{ backgroundColor: 'black' }} className="pt-24 pb-10 px-4">
           {children}
         </main>
       </div>
