@@ -29,12 +29,27 @@ const nextConfig = {
     ];
   },
   
+  // Add redirect from root to login page
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/auth/login',
+        permanent: true,
+      },
+    ];
+  },
+  
   // Configuration for pages and routes
   pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
-  experimental: {
-    // This will force Next.js to only use properly named dynamic routes
-    typedRoutes: true
-  }
+  
+  // Only enable typedRoutes in production (for Vercel)
+  experimental: process.env.NODE_ENV === 'production' 
+    ? {
+        // This will force Next.js to only use properly named dynamic routes
+        typedRoutes: true
+      } 
+    : {}
 }
 
 module.exports = nextConfig
