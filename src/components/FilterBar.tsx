@@ -45,10 +45,11 @@ export default function FilterBar({
 
   // Industry options
   const industryOptions = [
-    "Food",
-    "Fashion",
-    "Health",
-    "Electronics"
+    "DRINK",
+    "FOOD",
+    "FASHION",
+    "BEAUTY",
+    "HEALTH"
   ];
 
   // Format options
@@ -94,7 +95,7 @@ export default function FilterBar({
               }}
               className={`filter-option cursor-pointer px-3 py-2 rounded-md transition-colors ${
                 selectedIndustry.includes(industry)
-                  ? "bg-[#2F6E3F] text-white font-medium shadow-sm"
+                  ? "text-white font-medium"
                   : "text-gray-300 hover:bg-[#1a3429]"
               }`}
               data-selected={selectedIndustry.includes(industry)}
@@ -121,7 +122,7 @@ export default function FilterBar({
               }}
               className={`filter-option cursor-pointer px-3 py-2 rounded-md transition-colors ${
                 selectedFormat.includes(format)
-                  ? "bg-[#2F6E3F] text-white font-medium shadow-sm"
+                  ? "text-white font-medium"
                   : "text-gray-300 hover:bg-[#1a3429]"
               }`}
               data-selected={selectedFormat.includes(format)}
@@ -148,7 +149,7 @@ export default function FilterBar({
               }}
               className={`filter-option cursor-pointer px-3 py-2 rounded-md transition-colors ${
                 selectedLanguage.includes(language)
-                  ? "bg-[#2F6E3F] text-white font-medium shadow-sm"
+                  ? "text-white font-medium"
                   : "text-gray-300 hover:bg-[#1a3429]"
               }`}
               data-selected={selectedLanguage.includes(language)}

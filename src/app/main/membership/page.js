@@ -293,8 +293,7 @@ export default function MembershipPage() {
         style={{ maxHeight: "80vh" }}
       >
         <div className="p-4 overflow-y-auto flex flex-col" style={{ maxHeight: "calc(80vh - 40px)" }}>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold uppercase">Filters</h2>
+          <div className="flex justify-end items-center mb-4">
             <button 
               onClick={() => setFilterOpen(false)} 
               className="p-2 rounded-full hover:bg-gray-700"
@@ -383,7 +382,12 @@ export default function MembershipPage() {
                   {selectedIndustry.length}
                 </span>
               )}
-              <span aria-hidden="true">{desktopFilterOpen === 'industry' ? "▼" : "▲"}</span>
+              <img 
+                src="/filter-bar-1.png"
+                alt="Filter icon"
+                className="w-4 h-4 object-contain"
+                aria-hidden="true"
+              />
             </button>
             
             {desktopFilterOpen === 'industry' && (
@@ -395,8 +399,7 @@ export default function MembershipPage() {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="py-1">
-                  <div className="flex justify-between items-center px-3 py-1 border-b border-white/10">
-                    <h3 className="font-semibold text-xl uppercase">Industry</h3>
+                  <div className="flex justify-end items-center px-3 py-1 border-b border-white/10">
                     {selectedIndustry.length > 0 && (
                       <button 
                         onClick={() => setSelectedIndustry([])}
@@ -406,7 +409,7 @@ export default function MembershipPage() {
                       </button>
                     )}
                   </div>
-                  {["Food", "Fashion", "Health", "Electronics"].map((industry) => (
+                  {["DRINK", "FOOD", "FASHION", "BEAUTY", "HEALTH"].map((industry) => (
                     <div
                       key={industry}
                       onClick={() => {
@@ -416,13 +419,19 @@ export default function MembershipPage() {
                           setSelectedIndustry([...selectedIndustry, industry]);
                         }
                       }}
-                      className={`cursor-pointer px-3 py-1 text-xl font-semibold text-left uppercase ${
+                      className={`cursor-pointer px-3 py-1 text-xl font-semibold text-left uppercase flex items-center justify-between ${
                         selectedIndustry.includes(industry)
-                          ? "bg-[#2F6E3F] text-white"
+                          ? "text-white"
                           : "text-gray-300"
                       }`}
                     >
-                      {industry}
+                      <span>{industry}</span>
+                      <img 
+                        src={selectedIndustry.includes(industry) ? "/filter-bar-2.png" : "/filter-bar-3.png"}
+                        alt=""
+                        className="w-4 h-4 object-contain"
+                        aria-hidden="true"
+                      />
                     </div>
                   ))}
                 </div>
@@ -444,7 +453,12 @@ export default function MembershipPage() {
                   {selectedFormat.length}
                 </span>
               )}
-              <span aria-hidden="true">{desktopFilterOpen === 'format' ? "▼" : "▲"}</span>
+              <img 
+                src="/filter-bar-1.png"
+                alt="Filter icon"
+                className="w-4 h-4 object-contain"
+                aria-hidden="true"
+              />
             </button>
             
             {desktopFilterOpen === 'format' && (
@@ -456,8 +470,7 @@ export default function MembershipPage() {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="py-1">
-                  <div className="flex justify-between items-center px-3 py-1 border-b border-white/10">
-                    <h3 className="font-semibold text-xl uppercase">Format</h3>
+                  <div className="flex justify-end items-center px-3 py-1 border-b border-white/10">
                     {selectedFormat.length > 0 && (
                       <button 
                         onClick={() => setSelectedFormat([])}
@@ -477,13 +490,19 @@ export default function MembershipPage() {
                           setSelectedFormat([...selectedFormat, format]);
                         }
                       }}
-                      className={`cursor-pointer px-3 py-1 text-xl font-semibold text-left uppercase ${
+                      className={`cursor-pointer px-3 py-1 text-xl font-semibold text-left uppercase flex items-center justify-between ${
                         selectedFormat.includes(format)
-                          ? "bg-[#2F6E3F] text-white"
+                          ? "text-white"
                           : "text-gray-300"
                       }`}
                     >
-                      {format}
+                      <span>{format}</span>
+                      <img 
+                        src={selectedFormat.includes(format) ? "/filter-bar-2.png" : "/filter-bar-3.png"}
+                        alt=""
+                        className="w-4 h-4 object-contain"
+                        aria-hidden="true"
+                      />
                     </div>
                   ))}
                 </div>
@@ -505,7 +524,12 @@ export default function MembershipPage() {
                   {selectedLanguage.length}
                 </span>
               )}
-              <span aria-hidden="true">{desktopFilterOpen === 'language' ? "▼" : "▲"}</span>
+              <img 
+                src="/filter-bar-1.png"
+                alt="Filter icon"
+                className="w-4 h-4 object-contain"
+                aria-hidden="true"
+              />
             </button>
             
             {desktopFilterOpen === 'language' && (
@@ -517,8 +541,7 @@ export default function MembershipPage() {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="py-1">
-                  <div className="flex justify-between items-center px-3 py-1 border-b border-white/10">
-                    <h3 className="font-semibold text-xl uppercase">Language</h3>
+                  <div className="flex justify-end items-center px-3 py-1 border-b border-white/10">
                     {selectedLanguage.length > 0 && (
                       <button 
                         onClick={() => setSelectedLanguage([])}
@@ -538,13 +561,19 @@ export default function MembershipPage() {
                           setSelectedLanguage([...selectedLanguage, language]);
                         }
                       }}
-                      className={`cursor-pointer px-3 py-1 text-xl font-semibold text-left uppercase ${
+                      className={`cursor-pointer px-3 py-1 text-xl font-semibold text-left uppercase flex items-center justify-between ${
                         selectedLanguage.includes(language)
-                          ? "bg-[#2F6E3F] text-white"
+                          ? "text-white"
                           : "text-gray-300"
                       }`}
                     >
-                      {language}
+                      <span>{language}</span>
+                      <img 
+                        src={selectedLanguage.includes(language) ? "/filter-bar-2.png" : "/filter-bar-3.png"}
+                        alt=""
+                        className="w-4 h-4 object-contain"
+                        aria-hidden="true"
+                      />
                     </div>
                   ))}
                 </div>
