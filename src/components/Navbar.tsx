@@ -58,13 +58,13 @@ export default function Navbar() {
               <div className="flex-shrink-0">
                 <Link href={"/main/membership" as Route} className="flex items-center">
                   <Image
-                    src="/logo.svg"
+                    src="/mushi-logo.png"
                     alt="Mushi Logo"
-                    width={48}
-                    height={48}
-                    className="mr-2"
+                    width={120}
+                    height={36}
+                    priority
+                    className="object-contain"
                   />
-                  <span className="text-xl font-bold tracking-wide text-white">Mushi</span>
                 </Link>
               </div>
 
