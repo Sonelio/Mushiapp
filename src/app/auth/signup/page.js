@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { auth, db } from "../../../lib/firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -96,10 +96,12 @@ export default function SignupPage() {
           </button>
         </form>
 
-        <p className="mt-8 text-center text-[20px] font-normal" style={{ color: "#D6E7D3" }}>
+        {/* Login Link */}
+        <p className="text-center mt-6">
           Already have an account?{" "}
+          {/* @ts-ignore */}
           <Link href="/auth/login" className="font-medium text-[#1D6D1E]">
-            Sign in
+            Log in
           </Link>
         </p>
       </div>

@@ -56,15 +56,15 @@ export default function Navbar() {
             <div className="flex justify-between items-center h-20">
               {/* Logo */}
               <div className="flex-shrink-0">
-                <Link href="/main/membership" className="flex items-center">
+                <Link href={"/main/membership" as Route} className="flex items-center">
                   <Image
-                    src="/mushi logo.png"
+                    src="/logo.svg"
                     alt="Mushi Logo"
-                    width={120}
-                    height={36}
-                    priority
-                    className="object-contain"
+                    width={48}
+                    height={48}
+                    className="mr-2"
                   />
+                  <span className="text-xl font-bold tracking-wide text-white">Mushi</span>
                 </Link>
               </div>
 
@@ -90,11 +90,11 @@ export default function Navbar() {
 
               {/* Account Section - Desktop */}
               <div className="hidden md:flex items-center space-x-3">
-                <Link href="/main/account" className="flex items-center space-x-2">
+                <Link href={"/main/account" as Route} className="flex items-center space-x-2">
                   <ProfileImage />
-                  <div className="flex flex-col items-end">
-                    <span className="text-white text-sm">Account</span>
-                    <span className="text-gray-400 text-xs">{user?.displayName || 'Guest'}</span>
+                  <div className="text-sm mr-2 hidden md:block">
+                    <p className="font-medium text-white">{user?.displayName || 'My Account'}</p>
+                    <p className="text-gray-400 text-xs">View profile</p>
                   </div>
                 </Link>
               </div>
@@ -145,17 +145,15 @@ export default function Navbar() {
             <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
               <div className="px-2 pt-2 pb-3 space-y-1 border-t border-gray-700">
                 {/* Account Section - Mobile */}
-                <Link 
-                  href="/main/account" 
-                  className="flex items-center space-x-2 px-3 py-2 text-white"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <ProfileImage />
-                  <div className="flex flex-col">
-                    <span className="text-sm font-medium">Account</span>
-                    <span className="text-gray-400 text-xs">{user?.displayName || 'Guest'}</span>
-                  </div>
-                </Link>
+                <div className="py-2">
+                  <Link href={"/main/account" as Route} className="flex items-center space-x-3 px-3 py-2">
+                    <ProfileImage />
+                    <div>
+                      <p className="font-medium text-white">{user?.displayName || 'My Account'}</p>
+                      <p className="text-sm text-gray-400">View profile</p>
+                    </div>
+                  </Link>
+                </div>
 
                 {/* Navigation Links - Mobile */}
                 <Link

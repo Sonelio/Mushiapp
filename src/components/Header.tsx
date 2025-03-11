@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <header className="bg-[#121617] text-white p-4 flex justify-between items-center shadow-md">
       {/* Logo */}
-      <Link href="/" className="text-2xl font-bold">
+      <Link href={"/" as Route} className="text-2xl font-bold">
         Mushi
       </Link>
 

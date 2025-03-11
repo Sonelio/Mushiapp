@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
+import { Route } from "next";
 
 const poppins = Poppins({
   weight: ['400', '500', '600'],
@@ -88,10 +89,12 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="mt-8 text-center text-[20px] font-normal" style={{ color: "#D6E7D3" }}>
-          First time here?{" "}
+        {/* Sign Up Link */}
+        <p className="text-center mt-6">
+          Don't have an account?{" "}
+          {/* @ts-ignore */}
           <Link href="/auth/signup" className="font-medium text-[#1D6D1E]">
-            Create Account
+            Sign up
           </Link>
         </p>
       </div>

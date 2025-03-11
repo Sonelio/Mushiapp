@@ -49,11 +49,11 @@ export default function LessonClient({ slug }: LessonClientProps) {
           <div className="space-y-2">
             <h3 className="text-sm font-medium text-gray-400 uppercase">Next Up</h3>
             <div className="space-y-2">
-              <Link href="#" className="block p-4 hover:bg-[#11231C] rounded-lg transition-colors">
+              <Link href={"#" as Route} className="block p-4 hover:bg-[#11231C] rounded-lg transition-colors">
                 <h4 className="font-medium">Data & Pixel</h4>
                 <p className="text-sm text-gray-400">Setting up tracking</p>
               </Link>
-              <Link href="#" className="block p-4 hover:bg-[#11231C] rounded-lg transition-colors">
+              <Link href={"#" as Route} className="block p-4 hover:bg-[#11231C] rounded-lg transition-colors">
                 <h4 className="font-medium">Key Performance Indicators</h4>
                 <p className="text-sm text-gray-400">Measuring success</p>
               </Link>
@@ -112,7 +112,7 @@ export default function LessonClient({ slug }: LessonClientProps) {
               <ul className="space-y-2">
                 <li>
                   <a 
-                    href="#" 
+                    href={"#" as Route}
                     className="inline-flex items-center text-gray-300 hover:text-white transition-colors"
                   >
                     <svg 
@@ -134,7 +134,7 @@ export default function LessonClient({ slug }: LessonClientProps) {
                 </li>
                 <li>
                   <a 
-                    href="#" 
+                    href={"#" as Route}
                     className="inline-flex items-center text-gray-300 hover:text-white transition-colors"
                   >
                     <svg 
