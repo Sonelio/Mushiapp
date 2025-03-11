@@ -1,7 +1,6 @@
 "use client";
 
 import Link from 'next/link';
-import { Route } from 'next';
 
 export default function NotFound() {
   return (
@@ -12,7 +11,7 @@ export default function NotFound() {
           The page you are looking for doesn't exist or has been moved.
         </p>
         <div className="mt-8">
-          <Link href={"/" as Route} className="bg-[#11231C] hover:bg-[#0A1910] text-white px-6 py-3 rounded-md transition">
+          <Link href="/" className="bg-[#11231C] hover:bg-[#0A1910] text-white px-6 py-3 rounded-md transition">
             Return to Home
           </Link>
         </div>
