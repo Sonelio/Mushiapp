@@ -376,16 +376,18 @@ export default function MembershipPage() {
               aria-expanded={desktopFilterOpen === 'industry'}
               aria-controls="industry-dropdown"
             >
-              <span className="uppercase text-xl font-semibold">Industry</span>
-              {selectedIndustry.length > 0 && (
-                <span className="bg-[#10221B] text-xs">
-                  {selectedIndustry.length}
-                </span>
-              )}
+              <div className="flex items-center">
+                <span className="uppercase text-xl font-semibold">Industry</span>
+                {selectedIndustry.length > 0 && (
+                  <span className="ml-1 text-xs">
+                    {selectedIndustry.length}
+                  </span>
+                )}
+              </div>
               <img 
                 src="/filter-bar-1.png"
                 alt="Filter icon"
-                className="w-4 h-4 object-contain"
+                className="w-4 h-4 object-contain ml-4"
                 aria-hidden="true"
               />
             </button>
@@ -399,16 +401,7 @@ export default function MembershipPage() {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="py-1">
-                  <div className="flex justify-end items-center px-3 py-1 border-b border-white/10">
-                    {selectedIndustry.length > 0 && (
-                      <button 
-                        onClick={() => setSelectedIndustry([])}
-                        className="text-xl text-gray-400 hover:text-white uppercase font-semibold"
-                      >
-                        Clear
-                      </button>
-                    )}
-                  </div>
+                  <div className="border-b border-white/10 h-1"></div>
                   {["DRINK", "FOOD", "FASHION", "BEAUTY", "HEALTH"].map((industry) => (
                     <div
                       key={industry}
@@ -447,16 +440,18 @@ export default function MembershipPage() {
               aria-expanded={desktopFilterOpen === 'format'}
               aria-controls="format-dropdown"
             >
-              <span className="uppercase text-xl font-semibold">Format</span>
-              {selectedFormat.length > 0 && (
-                <span className="bg-[#10221B] text-xs">
-                  {selectedFormat.length}
-                </span>
-              )}
+              <div className="flex items-center">
+                <span className="uppercase text-xl font-semibold">Format</span>
+                {selectedFormat.length > 0 && (
+                  <span className="ml-1 text-xs">
+                    {selectedFormat.length}
+                  </span>
+                )}
+              </div>
               <img 
                 src="/filter-bar-1.png"
                 alt="Filter icon"
-                className="w-4 h-4 object-contain"
+                className="w-4 h-4 object-contain ml-4"
                 aria-hidden="true"
               />
             </button>
@@ -470,16 +465,7 @@ export default function MembershipPage() {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="py-1">
-                  <div className="flex justify-end items-center px-3 py-1 border-b border-white/10">
-                    {selectedFormat.length > 0 && (
-                      <button 
-                        onClick={() => setSelectedFormat([])}
-                        className="text-xl text-gray-400 hover:text-white uppercase font-semibold"
-                      >
-                        Clear
-                      </button>
-                    )}
-                  </div>
+                  <div className="border-b border-white/10 h-1"></div>
                   {["Feed", "Story"].map((format) => (
                     <div
                       key={format}
@@ -518,16 +504,18 @@ export default function MembershipPage() {
               aria-expanded={desktopFilterOpen === 'language'}
               aria-controls="language-dropdown"
             >
-              <span className="uppercase text-xl font-semibold">Language</span>
-              {selectedLanguage.length > 0 && (
-                <span className="bg-[#10221B] text-xs">
-                  {selectedLanguage.length}
-                </span>
-              )}
+              <div className="flex items-center">
+                <span className="uppercase text-xl font-semibold">Language</span>
+                {selectedLanguage.length > 0 && (
+                  <span className="ml-1 text-xs">
+                    {selectedLanguage.length}
+                  </span>
+                )}
+              </div>
               <img 
                 src="/filter-bar-1.png"
                 alt="Filter icon"
-                className="w-4 h-4 object-contain"
+                className="w-4 h-4 object-contain ml-4"
                 aria-hidden="true"
               />
             </button>
@@ -541,16 +529,7 @@ export default function MembershipPage() {
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="py-1">
-                  <div className="flex justify-end items-center px-3 py-1 border-b border-white/10">
-                    {selectedLanguage.length > 0 && (
-                      <button 
-                        onClick={() => setSelectedLanguage([])}
-                        className="text-xl text-gray-400 hover:text-white uppercase font-semibold"
-                      >
-                        Clear
-                      </button>
-                    )}
-                  </div>
+                  <div className="border-b border-white/10 h-1"></div>
                   {["LT", "EN"].map((language) => (
                     <div
                       key={language}
