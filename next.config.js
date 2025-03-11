@@ -29,16 +29,12 @@ const nextConfig = {
     ];
   },
   
-  // Exclude problematic routes with empty brackets from the build
+  // Configuration for pages and routes
   pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
   experimental: {
     // This will force Next.js to only use properly named dynamic routes
     typedRoutes: true
-  },
-  // Explicitly exclude the problematic routes
-  excludeRoute: (path) => {
-    return path.includes('/template/[]') || path.includes('/account/[]');
-  },
+  }
 }
 
 module.exports = nextConfig

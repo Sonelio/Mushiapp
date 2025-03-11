@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { Route } from 'next';
 
 interface LessonClientProps {
   slug: string;
@@ -15,7 +16,7 @@ export default function LessonClient({ slug }: LessonClientProps) {
       {/* Sidebar */}
       <aside className="w-80 bg-[#0E1814] min-h-screen p-6 space-y-6">
         <Link 
-          href="/courses"
+          href={"/main/courses" as Route}
           className="inline-flex items-center text-gray-300 hover:text-white transition-colors mb-8"
         >
           <svg 

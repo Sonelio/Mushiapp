@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { Route } from 'next';
 
 export default function Header() {
   return (
@@ -11,12 +12,18 @@ export default function Header() {
 
       {/* Navigation Links */}
       <nav className="space-x-6">
-        <Link href="/membership" className="hover:text-gray-400 transition">
-          Templates
-        </Link>
-        <Link href="/courses" className="hover:text-gray-400 transition">
-          Courses
-        </Link>
+        <ul className="flex space-x-8">
+          <li>
+            <Link href={"/main/membership" as Route} className="hover:text-gray-400 transition">
+              Templates
+            </Link>
+          </li>
+          <li>
+            <Link href={"/main/courses" as Route} className="hover:text-gray-400 transition">
+              Courses
+            </Link>
+          </li>
+        </ul>
       </nav>
 
       {/* Account Placeholder */}

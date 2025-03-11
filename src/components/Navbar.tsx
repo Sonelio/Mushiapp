@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '../lib/useAuth';
 import { useRouter, usePathname } from 'next/navigation';
+import { Route } from 'next';
 
 interface User {
   photoURL?: string;
@@ -70,7 +71,7 @@ export default function Navbar() {
               {/* Main Navigation - Desktop */}
               <div className="hidden md:flex items-center space-x-8">
                 <Link
-                  href="/main/membership"
+                  href={"/main/membership" as Route}
                   className={`text-white text-sm font-medium tracking-wide px-6 py-4 rounded-md transition-colors ${
                     isTemplatesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
                   }`}
@@ -78,7 +79,7 @@ export default function Navbar() {
                   TEMPLATES
                 </Link>
                 <Link
-                  href="/main/courses"
+                  href={"/main/courses" as Route}
                   className={`text-white text-sm font-medium tracking-wide px-6 py-4 rounded-md transition-colors ${
                     isCoursesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
                   }`}
@@ -158,7 +159,7 @@ export default function Navbar() {
 
                 {/* Navigation Links - Mobile */}
                 <Link
-                  href="/main/membership"
+                  href={"/main/membership" as Route}
                   className={`block px-3 py-2 text-white text-sm font-medium tracking-wide rounded-md transition-colors ${
                     isTemplatesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
                   }`}
@@ -167,7 +168,7 @@ export default function Navbar() {
                   TEMPLATES
                 </Link>
                 <Link
-                  href="/main/courses"
+                  href={"/main/courses" as Route}
                   className={`block px-3 py-2 text-white text-sm font-medium tracking-wide rounded-md transition-colors ${
                     isCoursesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
                   }`}
