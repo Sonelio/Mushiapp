@@ -3,13 +3,12 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-interface LessonProps {
-  params: {
-    slug: string;
-  };
+type PageProps = {
+  params: { slug: string }
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export default function LessonPage({ params }: LessonProps) {
+export default function LessonPage({ params, searchParams }: PageProps) {
   const [isCompleted, setIsCompleted] = useState(false);
 
   return (
