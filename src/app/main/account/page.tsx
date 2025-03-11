@@ -171,7 +171,7 @@ export default function AccountPage() {
 
   if (loading || isLoadingUserDoc) {
     return (
-      <div style={{ backgroundColor: 'black', minHeight: '100vh' }} className="flex items-center justify-center">
+      <div className={`min-h-screen flex items-center justify-center bg-black ${poppins.className}`}>
         <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -179,7 +179,7 @@ export default function AccountPage() {
 
   if (error) {
     return (
-      <div style={{ backgroundColor: 'black', minHeight: '100vh' }} className="flex flex-col items-center justify-center text-white space-y-4">
+      <div className={`min-h-screen flex flex-col items-center justify-center text-white space-y-4 ${poppins.className}`}>
         <div className="text-red-500 text-xl">⚠️ Error</div>
         <p className="text-gray-400">{error}</p>
       </div>
@@ -188,16 +188,16 @@ export default function AccountPage() {
 
   if (!userData) {
     return (
-      <div style={{ backgroundColor: 'black', minHeight: '100vh' }} className="flex items-center justify-center text-white">
+      <div className={`min-h-screen flex items-center justify-center text-white ${poppins.className}`}>
         <p>No user data found</p>
       </div>
     );
   }
 
   return (
-    <div style={{ backgroundColor: 'black', minHeight: '100vh' }} className={`flex items-center justify-center ${poppins.className}`}>
-      <div style={{ backgroundColor: 'black' }} className="p-8 w-full max-w-[450px] relative">
-        <div style={{ backgroundColor: 'black' }} className="flex flex-col items-center mb-6">
+    <div className={`min-h-screen flex items-center justify-center bg-black ${poppins.className}`}>
+      <div className="p-8 w-full max-w-[450px] relative bg-black">
+        <div className="flex flex-col items-center mb-6 bg-black">
           <div className="relative group mb-4">
             <img
               src={photoURL || "/default-avatar.png"}
@@ -221,11 +221,11 @@ export default function AccountPage() {
           {isUploading && <p className="text-xs text-[#9DB396] mb-2">Uploading...</p>}
         </div>
 
-        <h2 style={{ fontSize: '40px' }} className="text-center font-bold text-white mb-8">
+        <h2 className="text-center font-bold text-white mb-8 text-[50px]">
           Account Settings
         </h2>
 
-        <form onSubmit={handleSave} style={{ backgroundColor: 'black' }} className="space-y-4">
+        <form onSubmit={handleSave} className="space-y-4 bg-black">
           <input
             type="text"
             placeholder="Name"
