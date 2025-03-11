@@ -5,12 +5,12 @@ import { getFirestore } from "firebase/firestore"; // ← Ensure Firestore is im
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDr1A4mCQFmmY-_3CbcNOaqxTg1XyFxLvA",
-  authDomain: "mushi-a9949.firebaseapp.com",
-  projectId: "mushi-a9949",
-  storageBucket: "mushi-a9949.firebasestorage.app",
-  messagingSenderId: "970701679657",
-  appId: "1:970701679657:web:599e10dfc39115f70ec038",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
