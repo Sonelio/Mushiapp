@@ -1,4 +1,5 @@
 // Remove all imports and type definitions
+// Test change for git detection
 
 // Static page without dynamic parameters
 export default async function Page({
