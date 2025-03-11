@@ -10,9 +10,9 @@ export default function MainLayout({
 }) {
   return (
     <AuthProvider>
-      <div className="bg-black min-h-screen">
+      <div id="main-layout-container">
         <Navbar />
-        <main className="pt-24 pb-10 px-4 bg-black">
+        <main id="main-content">
           {children}
         </main>
       </div>

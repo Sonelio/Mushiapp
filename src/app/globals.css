@@ -24,6 +24,21 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Main Layout Styling */
+#main-layout-container {
+  background-color: #000000;
+  min-height: 100vh;
+}
+
+#main-content {
+  padding-top: 6rem; /* 24px */
+  padding-bottom: 2.5rem; /* 10px */
+  padding-left: 1rem; /* 4px */
+  padding-right: 1rem; /* 4px */
+  background-color: #000000;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

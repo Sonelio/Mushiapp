@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import Image from "next/image";
 
 interface Template {
   id: string;
@@ -31,103 +32,66 @@ const TemplateCard = forwardRef<HTMLDivElement, TemplateCardProps>(({ template, 
               style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
             >
               {template.canvaLink && (
+                <div className="flex items-center">
+                  <a
+                    href={template.canvaLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#10221B] text-white px-4 py-2 rounded-md text-[20px] font-semibold hover:bg-[#10221B]/80 transition-colors"
+                  >
+                    Open in Canva
+                  </a>
+                  <div 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onToggleSave();
+                    }}
+                    className={`ml-2 ${isSaved ? 'bg-[#1D6D1E]' : 'bg-[#10221B]'} px-4 py-4 rounded-md flex items-center justify-center h-[44px] cursor-pointer hover:opacity-90 transition-colors`}
+                    aria-label={isSaved ? "Remove from favorites" : "Add to favorites"}
+                  >
+                    <img 
+                      src="/hover-icon.png" 
+                      alt={isSaved ? "Saved to favorites" : "Add to favorites"} 
+                      width={13} 
+                      height={14} 
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile Action Bar (below image) */}
+          <div className="md:hidden bg-white border-t border-gray-100 p-3">
+            {template.canvaLink && (
+              <div className="flex items-center">
                 <a
                   href={template.canvaLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#20382E] text-white px-4 py-2 rounded-md font-medium hover:bg-[#2C4C3E] transition-colors"
+                  className="bg-[#10221B] text-white px-4 py-2 rounded-md text-[20px] font-semibold hover:bg-[#10221B]/80 transition-colors flex-grow text-center"
                 >
                   Open in Canva
                 </a>
-              )}
-            </div>
-
-            {/* Desktop Like Button (only visible on hover) */}
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                onToggleSave();
-              }}
-              className="absolute top-3 right-3 p-2 bg-black bg-opacity-50 rounded-full hover:bg-opacity-70 hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            >
-              {isSaved ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="#67C97E"
-                  viewBox="0 0 24 24"
+                <div 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onToggleSave();
+                  }}
+                  className={`ml-2 ${isSaved ? 'bg-[#1D6D1E]' : 'bg-[#10221B]'} px-4 py-2 rounded-md flex items-center justify-center h-[44px] cursor-pointer hover:opacity-90 transition-colors`}
+                  aria-label={isSaved ? "Remove from favorites" : "Add to favorites"}
                 >
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M12.1 8.64l-.1.1-.1-.1C9.14 5.61 6.5 5.24 4.24 7.5c-2.27 2.27-2.27 5.95 0 8.22l7.46 7.46c.39.39 1.02.39 1.41 0l7.46-7.46c2.27-2.27 2.27-5.95 0-8.22-2.26-2.26-4.9-1.89-7.06.27z"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                  <img 
+                    src="/hover-icon.png" 
+                    alt={isSaved ? "Saved to favorites" : "Add to favorites"} 
+                    width={13} 
+                    height={14} 
+                    className="object-contain"
                   />
-                </svg>
-              )}
-            </button>
-          </div>
-
-          {/* Mobile Action Bar (below image) */}
-          <div className="md:hidden bg-white border-t border-gray-100 p-3 flex items-center justify-between">
-            {template.canvaLink && (
-              <a
-                href={template.canvaLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#20382E] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-[#2C4C3E] transition-colors flex-grow mr-3 text-center"
-              >
-                Open in Canva
-              </a>
+                </div>
+              </div>
             )}
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                onToggleSave();
-              }}
-              className="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition-colors"
-              aria-label={isSaved ? "Remove from favorites" : "Add to favorites"}
-            >
-              {isSaved ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="#67C97E"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  stroke="#374151"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M12.1 8.64l-.1.1-.1-.1C9.14 5.61 6.5 5.24 4.24 7.5c-2.27 2.27-2.27 5.95 0 8.22l7.46 7.46c.39.39 1.02.39 1.41 0l7.46-7.46c2.27-2.27 2.27-5.95 0-8.22-2.26-2.26-4.9-1.89-7.06.27z"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              )}
-            </button>
           </div>
         </>
       )}
