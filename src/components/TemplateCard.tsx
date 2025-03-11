@@ -47,7 +47,7 @@ const TemplateCard = forwardRef<HTMLDivElement, TemplateCardProps>(({ template, 
                       e.stopPropagation();
                       onToggleSave();
                     }}
-                    className={`${isSaved ? 'bg-[#1D6D1E]' : 'bg-[#10221B]'} px-3 py-4 rounded-md flex items-center justify-center h-[44px] w-[44px] cursor-pointer hover:opacity-90 transition-colors`}
+                    className="bg-[#10221B] px-3 py-4 rounded-md flex items-center justify-center h-[44px] w-[44px] cursor-pointer hover:opacity-90 transition-colors"
                     aria-label={isSaved ? "Remove from favorites" : "Add to favorites"}
                   >
                     <img 
@@ -81,7 +81,7 @@ const TemplateCard = forwardRef<HTMLDivElement, TemplateCardProps>(({ template, 
                     e.stopPropagation();
                     onToggleSave();
                   }}
-                  className={`${isSaved ? 'bg-[#1D6D1E]' : 'bg-[#10221B]'} px-3 py-2 rounded-md flex items-center justify-center h-[44px] w-[44px] cursor-pointer hover:opacity-90 transition-colors`}
+                  className="bg-[#10221B] px-3 py-2 rounded-md flex items-center justify-center h-[44px] w-[44px] cursor-pointer hover:opacity-90 transition-colors"
                   aria-label={isSaved ? "Remove from favorites" : "Add to favorites"}
                 >
                   <img 
