@@ -1,5 +1,13 @@
 import LessonClient from './LessonClient';
 
-export default function LessonPage({ params }: { params: { slug: string } }) {
-  return <LessonClient slug={params.slug} />;
+interface PageParams {
+  slug: string;
+}
+
+// Make the page component async to match Next.js App Router expectations
+export default async function LessonPage({ params }: { params: PageParams }) {
+  // Params may be a promise in Next.js App Router, so await it
+  const slug = params.slug;
+  
+  return <LessonClient slug={slug} />;
 } 

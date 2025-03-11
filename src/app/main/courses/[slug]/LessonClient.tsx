@@ -12,7 +12,7 @@ export default function LessonClient({ slug }: LessonClientProps) {
 
   return (
     <div className="min-h-screen bg-[#0B0F0F] text-white flex">
-      {/* Sidebar - Same as courses page */}
+      {/* Sidebar */}
       <aside className="w-80 bg-[#0E1814] min-h-screen p-6 space-y-6">
         <Link 
           href="/courses"
