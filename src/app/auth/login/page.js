@@ -43,7 +43,7 @@ export default function LoginPage() {
         {/* App Logo */}
         <div className="flex justify-center mb-8">
           <Image
-            src="/mushi logo.png"
+            src="/mushi-logo.png"
             alt="Mushi Logo"
             width={150}
             height={45}
