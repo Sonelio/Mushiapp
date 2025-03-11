@@ -32,31 +32,32 @@ const TemplateCard = forwardRef<HTMLDivElement, TemplateCardProps>(({ template, 
               style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
             >
               {template.canvaLink && (
-                <div className="flex items-center">
+                <div className="flex items-center space-x-6">
                   <a
                     href={template.canvaLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-[#10221B] text-white px-4 py-2 rounded-md text-[20px] font-semibold hover:bg-[#10221B]/80 transition-colors"
+                    className="bg-[#10221B] text-white px-6 py-2 rounded-md text-[20px] font-semibold hover:bg-[#10221B]/80 transition-colors"
                   >
                     Open in Canva
                   </a>
-                  <div 
+                  <button
                     onClick={(e) => {
                       e.preventDefault();
+                      e.stopPropagation();
                       onToggleSave();
                     }}
-                    className={`ml-2 ${isSaved ? 'bg-[#1D6D1E]' : 'bg-[#10221B]'} px-4 py-4 rounded-md flex items-center justify-center h-[44px] cursor-pointer hover:opacity-90 transition-colors`}
+                    className={`${isSaved ? 'bg-[#1D6D1E]' : 'bg-[#10221B]'} px-3 py-4 rounded-md flex items-center justify-center h-[44px] w-[44px] cursor-pointer hover:opacity-90 transition-colors`}
                     aria-label={isSaved ? "Remove from favorites" : "Add to favorites"}
                   >
                     <img 
-                      src="/hover-icon.png" 
+                      src={isSaved ? "/hover-icon-scs.png" : "/hover-icon.png"} 
                       alt={isSaved ? "Saved to favorites" : "Add to favorites"} 
                       width={13} 
                       height={14} 
                       className="object-contain"
                     />
-                  </div>
+                  </button>
                 </div>
               )}
             </div>
@@ -65,31 +66,32 @@ const TemplateCard = forwardRef<HTMLDivElement, TemplateCardProps>(({ template, 
           {/* Mobile Action Bar (below image) */}
           <div className="md:hidden bg-white border-t border-gray-100 p-3">
             {template.canvaLink && (
-              <div className="flex items-center">
+              <div className="flex items-center space-x-6">
                 <a
                   href={template.canvaLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#10221B] text-white px-4 py-2 rounded-md text-[20px] font-semibold hover:bg-[#10221B]/80 transition-colors flex-grow text-center"
+                  className="bg-[#10221B] text-white px-6 py-2 rounded-md text-[20px] font-semibold hover:bg-[#10221B]/80 transition-colors"
                 >
                   Open in Canva
                 </a>
-                <div 
+                <button
                   onClick={(e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     onToggleSave();
                   }}
-                  className={`ml-2 ${isSaved ? 'bg-[#1D6D1E]' : 'bg-[#10221B]'} px-4 py-2 rounded-md flex items-center justify-center h-[44px] cursor-pointer hover:opacity-90 transition-colors`}
+                  className={`${isSaved ? 'bg-[#1D6D1E]' : 'bg-[#10221B]'} px-3 py-2 rounded-md flex items-center justify-center h-[44px] w-[44px] cursor-pointer hover:opacity-90 transition-colors`}
                   aria-label={isSaved ? "Remove from favorites" : "Add to favorites"}
                 >
                   <img 
-                    src="/hover-icon.png" 
+                    src={isSaved ? "/hover-icon-scs.png" : "/hover-icon.png"} 
                     alt={isSaved ? "Saved to favorites" : "Add to favorites"} 
                     width={13} 
                     height={14} 
                     className="object-contain"
                   />
-                </div>
+                </button>
               </div>
             )}
           </div>
