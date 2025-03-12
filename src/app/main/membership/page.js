@@ -372,7 +372,7 @@ export default function MembershipPage() {
           <div className="relative">
             <button
               onClick={() => setDesktopFilterOpen(prev => prev === 'industry' ? null : 'industry')}
-              className="bg-[#10221B] text-white w-[150px] h-[60px] rounded-lg flex items-center justify-between px-4"
+              className="bg-[#10221B] text-white w-[180px] h-[60px] rounded-lg flex items-center justify-between px-4"
               aria-expanded={desktopFilterOpen === 'industry'}
               aria-controls="industry-dropdown"
             >
@@ -395,39 +395,37 @@ export default function MembershipPage() {
             {desktopFilterOpen === 'industry' && (
               <div 
                 id="industry-dropdown"
-                className="absolute bottom-full left-0 mb-2 w-[150px] bg-[#10221B] text-white rounded-lg shadow-lg z-30"
+                className="absolute bottom-full left-0 mb-2 w-[180px] bg-[#10221B] text-white rounded-lg shadow-lg z-30 overflow-hidden"
                 role="dialog"
                 aria-label="Industry options"
                 onClick={(e) => e.stopPropagation()}
+                style={{minWidth: "180px"}}
               >
-                <div className="py-1">
-                  <div className="border-b border-white/10 h-1"></div>
-                  {["DRINK", "FOOD", "FASHION", "BEAUTY", "HEALTH"].map((industry) => (
-                    <div
-                      key={industry}
-                      onClick={() => {
-                        if (selectedIndustry.includes(industry)) {
-                          setSelectedIndustry(selectedIndustry.filter(i => i !== industry));
-                        } else {
-                          setSelectedIndustry([...selectedIndustry, industry]);
-                        }
-                      }}
-                      className={`cursor-pointer px-3 py-1 text-xl font-semibold text-left uppercase flex items-center justify-between ${
-                        selectedIndustry.includes(industry)
-                          ? "text-white"
-                          : "text-gray-300"
-                      }`}
-                    >
-                      <span>{industry}</span>
-                      <img 
-                        src={selectedIndustry.includes(industry) ? "/filter-bar-2.png" : "/filter-bar-3.png"}
-                        alt=""
-                        className="w-4 h-4 object-contain"
-                        aria-hidden="true"
-                      />
-                    </div>
-                  ))}
-                </div>
+                {["DRINK", "FOOD", "FASHION", "BEAUTY", "HEALTH"].map((industry) => (
+                  <div
+                    key={industry}
+                    onClick={() => {
+                      if (selectedIndustry.includes(industry)) {
+                        setSelectedIndustry(selectedIndustry.filter(i => i !== industry));
+                      } else {
+                        setSelectedIndustry([...selectedIndustry, industry]);
+                      }
+                    }}
+                    className={`cursor-pointer px-4 py-2 text-xl font-semibold text-left uppercase flex items-center justify-between ${
+                      selectedIndustry.includes(industry)
+                        ? "text-white"
+                        : "text-gray-300"
+                    }`}
+                  >
+                    <span>{industry}</span>
+                    <img 
+                      src={selectedIndustry.includes(industry) ? "/filter-bar-2.png" : "/filter-bar-3.png"}
+                      alt=""
+                      className="w-4 h-4 object-contain"
+                      aria-hidden="true"
+                    />
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -459,39 +457,37 @@ export default function MembershipPage() {
             {desktopFilterOpen === 'format' && (
               <div 
                 id="format-dropdown"
-                className="absolute bottom-full left-0 mb-2 w-[150px] bg-[#10221B] text-white rounded-lg shadow-lg z-30"
+                className="absolute bottom-full left-0 mb-2 w-[150px] bg-[#10221B] text-white rounded-lg shadow-lg z-30 overflow-hidden"
                 role="dialog"
                 aria-label="Format options"
                 onClick={(e) => e.stopPropagation()}
+                style={{minWidth: "150px"}}
               >
-                <div className="py-1">
-                  <div className="border-b border-white/10 h-1"></div>
-                  {["Feed", "Story"].map((format) => (
-                    <div
-                      key={format}
-                      onClick={() => {
-                        if (selectedFormat.includes(format)) {
-                          setSelectedFormat(selectedFormat.filter(f => f !== format));
-                        } else {
-                          setSelectedFormat([...selectedFormat, format]);
-                        }
-                      }}
-                      className={`cursor-pointer px-3 py-1 text-xl font-semibold text-left uppercase flex items-center justify-between ${
-                        selectedFormat.includes(format)
-                          ? "text-white"
-                          : "text-gray-300"
-                      }`}
-                    >
-                      <span>{format}</span>
-                      <img 
-                        src={selectedFormat.includes(format) ? "/filter-bar-2.png" : "/filter-bar-3.png"}
-                        alt=""
-                        className="w-4 h-4 object-contain"
-                        aria-hidden="true"
-                      />
-                    </div>
-                  ))}
-                </div>
+                {["Feed", "Story"].map((format) => (
+                  <div
+                    key={format}
+                    onClick={() => {
+                      if (selectedFormat.includes(format)) {
+                        setSelectedFormat(selectedFormat.filter(f => f !== format));
+                      } else {
+                        setSelectedFormat([...selectedFormat, format]);
+                      }
+                    }}
+                    className={`cursor-pointer px-4 py-2 text-xl font-semibold text-left uppercase flex items-center justify-between ${
+                      selectedFormat.includes(format)
+                        ? "text-white"
+                        : "text-gray-300"
+                    }`}
+                  >
+                    <span>{format}</span>
+                    <img 
+                      src={selectedFormat.includes(format) ? "/filter-bar-2.png" : "/filter-bar-3.png"}
+                      alt=""
+                      className="w-4 h-4 object-contain"
+                      aria-hidden="true"
+                    />
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -500,7 +496,7 @@ export default function MembershipPage() {
           <div className="relative">
             <button
               onClick={() => setDesktopFilterOpen(prev => prev === 'language' ? null : 'language')}
-              className="bg-[#10221B] text-white w-[150px] h-[60px] rounded-lg flex items-center justify-between px-4"
+              className="bg-[#10221B] text-white w-[180px] h-[60px] rounded-lg flex items-center justify-between px-4"
               aria-expanded={desktopFilterOpen === 'language'}
               aria-controls="language-dropdown"
             >
@@ -523,39 +519,37 @@ export default function MembershipPage() {
             {desktopFilterOpen === 'language' && (
               <div 
                 id="language-dropdown"
-                className="absolute bottom-full left-0 mb-2 w-[180px] bg-[#10221B] text-white rounded-lg shadow-lg z-30"
+                className="absolute bottom-full left-0 mb-2 w-[180px] bg-[#10221B] text-white rounded-lg shadow-lg z-30 overflow-hidden"
                 role="dialog"
                 aria-label="Language options"
                 onClick={(e) => e.stopPropagation()}
+                style={{minWidth: "180px"}}
               >
-                <div className="py-1">
-                  <div className="border-b border-white/10 h-1"></div>
-                  {["LT", "EN"].map((language) => (
-                    <div
-                      key={language}
-                      onClick={() => {
-                        if (selectedLanguage.includes(language)) {
-                          setSelectedLanguage(selectedLanguage.filter(l => l !== language));
-                        } else {
-                          setSelectedLanguage([...selectedLanguage, language]);
-                        }
-                      }}
-                      className={`cursor-pointer px-3 py-1 text-xl font-semibold text-left uppercase flex items-center justify-between ${
-                        selectedLanguage.includes(language)
-                          ? "text-white"
-                          : "text-gray-300"
-                      }`}
-                    >
-                      <span>{language}</span>
-                      <img 
-                        src={selectedLanguage.includes(language) ? "/filter-bar-2.png" : "/filter-bar-3.png"}
-                        alt=""
-                        className="w-4 h-4 object-contain"
-                        aria-hidden="true"
-                      />
-                    </div>
-                  ))}
-                </div>
+                {["LT", "EN"].map((language) => (
+                  <div
+                    key={language}
+                    onClick={() => {
+                      if (selectedLanguage.includes(language)) {
+                        setSelectedLanguage(selectedLanguage.filter(l => l !== language));
+                      } else {
+                        setSelectedLanguage([...selectedLanguage, language]);
+                      }
+                    }}
+                    className={`cursor-pointer px-4 py-2 text-xl font-semibold text-left uppercase flex items-center justify-between ${
+                      selectedLanguage.includes(language)
+                        ? "text-white"
+                        : "text-gray-300"
+                    }`}
+                  >
+                    <span>{language}</span>
+                    <img 
+                      src={selectedLanguage.includes(language) ? "/filter-bar-2.png" : "/filter-bar-3.png"}
+                      alt=""
+                      className="w-4 h-4 object-contain"
+                      aria-hidden="true"
+                    />
+                  </div>
+                ))}
               </div>
             )}
           </div>
