@@ -313,7 +313,7 @@ export default function MembershipPage() {
 
           {/* Sort Options */}
           <div className="mb-6">
-            <h3 className="text-xl font-semibold uppercase mb-2">Sort By</h3>
+            <h3 className="text-xl font-bold uppercase mb-2">Sort By</h3>
             <div className="space-y-2">
               {["popular", "newest", "oldest", "saved"].map((option) => (
                 <div
@@ -358,14 +358,18 @@ export default function MembershipPage() {
             </button>
 
             {/* Support Button */}
-            <button 
+            <button
               onClick={() => window.open('mailto:support@example.com')}
-              className="w-full bg-[#203C1F] text-white h-[60px] rounded-lg flex items-center justify-center gap-2"
+              className="bg-[#10221B] text-white w-[150px] h-[60px] rounded-lg flex items-center justify-between px-4"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M12 21a9 9 0 100-18 9 9 0 000 18z" />
-              </svg>
-              <span className="uppercase text-xl font-semibold">Support</span>
+              <div className="flex items-center gap-2">
+                <img
+                  src="/supporticon.png"
+                  alt="Support icon"
+                  className="w-6 h-6 object-contain"
+                />
+                <span className="uppercase text-xl font-semibold">Support</span>
+              </div>
             </button>
           </div>
         </div>
@@ -631,8 +635,13 @@ export default function MembershipPage() {
                 aria-controls="sort-dropdown"
                 aria-label="Sort templates"
               >
-                <span className="uppercase text-xl font-medium">Sort</span>
-                <span aria-hidden="true">{sortOpen ? "▼" : "▲"}</span>
+                <span className="uppercase text-xl font-bold">Sort</span>
+                <img 
+                  src="/filter-bar-1.png"
+                  alt="Sort icon"
+                  className="w-4 h-4 object-contain"
+                  aria-hidden="true"
+                />
               </button>
               {sortOpen && (
                 <div 
@@ -644,7 +653,7 @@ export default function MembershipPage() {
                 >
                   <div className="py-1">
                     <div className="flex justify-between items-center px-3 py-1 border-b border-white/10">
-                      <h3 className="font-semibold text-xl uppercase">Sort By</h3>
+                      <h3 className="font-bold text-xl uppercase">Sort By</h3>
                     </div>
                     {["popular", "newest", "oldest", "saved"].map((option) => (
                       <div
@@ -680,12 +689,14 @@ export default function MembershipPage() {
           {/* Support Button */}
           <button
             onClick={() => window.open('mailto:support@example.com')}
-            className="bg-[#203C1F] text-white w-[150px] h-[60px] rounded-lg flex items-center justify-between px-4"
+            className="bg-[#10221B] text-white w-[150px] h-[60px] rounded-lg flex items-center justify-between px-4"
           >
             <div className="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M12 21a9 9 0 100-18 9 9 0 000 18z" />
-              </svg>
+              <img
+                src="/supporticon.png"
+                alt="Support icon"
+                className="w-6 h-6 object-contain"
+              />
               <span className="uppercase text-xl font-semibold">Support</span>
             </div>
           </button>
