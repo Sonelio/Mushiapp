@@ -220,7 +220,7 @@ export default function MembershipPage() {
       <style jsx>{`
         @media (min-width: 1280px) and (max-width: 1440px) {
           .template-grid {
-            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
           }
         }
       `}</style>
