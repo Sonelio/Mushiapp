@@ -74,81 +74,105 @@ export default function FilterBar({
       )}
 
       {/* Industry Filter */}
-      <div className="filter-section">
-        <h3 className="filter-section-title text-gray-300">Industry</h3>
+      <div className="filter-section overflow-hidden">
+        <h3 className="filter-section-title text-gray-300 font-semibold mb-2">Industry</h3>
         <div className="space-y-2">
           {industryOptions.map((industry) => (
             <div
               key={industry}
-              onClick={() => {
-                if (selectedIndustry.includes(industry)) {
-                  setSelectedIndustry(selectedIndustry.filter((i) => i !== industry));
-                } else {
-                  setSelectedIndustry([...selectedIndustry, industry]);
-                }
-              }}
-              className={`filter-option cursor-pointer px-3 py-2 rounded-md transition-colors ${
+              onClick={() => toggleSelection(industry, selectedIndustry, setSelectedIndustry)}
+              className={`filter-option cursor-pointer px-3 py-2 rounded-md transition-colors w-full flex items-center justify-between ${
                 selectedIndustry.includes(industry)
-                  ? "text-white font-medium"
+                  ? "text-white font-semibold"
                   : "text-gray-300 hover:bg-[#1a3429]"
               }`}
+              style={{
+                display: "flex", 
+                justifyContent: "space-between", 
+                alignItems: "center",
+                padding: "0.5rem 0.75rem",
+                width: "100%",
+                boxSizing: "border-box"
+              }}
               data-selected={selectedIndustry.includes(industry)}
             >
-              {industry}
+              <span className="uppercase">{industry}</span>
+              <img 
+                src={selectedIndustry.includes(industry) ? "/filter-bar-2.png" : "/filter-bar-3.png"}
+                alt=""
+                className="w-4 h-4 object-contain"
+                aria-hidden="true"
+              />
             </div>
           ))}
         </div>
       </div>
 
       {/* Format Filter */}
-      <div className="filter-section">
-        <h3 className="filter-section-title text-gray-300">Format</h3>
+      <div className="filter-section overflow-hidden">
+        <h3 className="filter-section-title text-gray-300 font-semibold mb-2">Format</h3>
         <div className="space-y-2">
           {formatOptions.map((format) => (
             <div
               key={format}
-              onClick={() => {
-                if (selectedFormat.includes(format)) {
-                  setSelectedFormat(selectedFormat.filter((f) => f !== format));
-                } else {
-                  setSelectedFormat([...selectedFormat, format]);
-                }
-              }}
-              className={`filter-option cursor-pointer px-3 py-2 rounded-md transition-colors ${
+              onClick={() => toggleSelection(format, selectedFormat, setSelectedFormat)}
+              className={`filter-option cursor-pointer px-3 py-2 rounded-md transition-colors w-full flex items-center justify-between ${
                 selectedFormat.includes(format)
-                  ? "text-white font-medium"
+                  ? "text-white font-semibold"
                   : "text-gray-300 hover:bg-[#1a3429]"
               }`}
+              style={{
+                display: "flex", 
+                justifyContent: "space-between", 
+                alignItems: "center",
+                padding: "0.5rem 0.75rem",
+                width: "100%",
+                boxSizing: "border-box"
+              }}
               data-selected={selectedFormat.includes(format)}
             >
-              {format}
+              <span className="uppercase">{format}</span>
+              <img 
+                src={selectedFormat.includes(format) ? "/filter-bar-2.png" : "/filter-bar-3.png"}
+                alt=""
+                className="w-4 h-4 object-contain"
+                aria-hidden="true"
+              />
             </div>
           ))}
         </div>
       </div>
 
       {/* Language Filter */}
-      <div className="filter-section">
-        <h3 className="filter-section-title text-gray-300">Language</h3>
+      <div className="filter-section overflow-hidden">
+        <h3 className="filter-section-title text-gray-300 font-semibold mb-2">Language</h3>
         <div className="space-y-2">
           {languageOptions.map((language) => (
             <div
               key={language}
-              onClick={() => {
-                if (selectedLanguage.includes(language)) {
-                  setSelectedLanguage(selectedLanguage.filter((l) => l !== language));
-                } else {
-                  setSelectedLanguage([...selectedLanguage, language]);
-                }
-              }}
-              className={`filter-option cursor-pointer px-3 py-2 rounded-md transition-colors ${
+              onClick={() => toggleSelection(language, selectedLanguage, setSelectedLanguage)}
+              className={`filter-option cursor-pointer px-3 py-2 rounded-md transition-colors w-full flex items-center justify-between ${
                 selectedLanguage.includes(language)
-                  ? "text-white font-medium"
+                  ? "text-white font-semibold"
                   : "text-gray-300 hover:bg-[#1a3429]"
               }`}
+              style={{
+                display: "flex", 
+                justifyContent: "space-between", 
+                alignItems: "center",
+                padding: "0.5rem 0.75rem",
+                width: "100%",
+                boxSizing: "border-box"
+              }}
               data-selected={selectedLanguage.includes(language)}
             >
-              {language}
+              <span className="uppercase">{language}</span>
+              <img 
+                src={selectedLanguage.includes(language) ? "/filter-bar-2.png" : "/filter-bar-3.png"}
+                alt=""
+                className="w-4 h-4 object-contain"
+                aria-hidden="true"
+              />
             </div>
           ))}
         </div>

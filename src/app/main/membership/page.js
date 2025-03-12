@@ -375,6 +375,16 @@ export default function MembershipPage() {
               className="bg-[#10221B] text-white w-[180px] h-[60px] rounded-lg flex items-center justify-between px-4"
               aria-expanded={desktopFilterOpen === 'industry'}
               aria-controls="industry-dropdown"
+              style={{
+                display: "flex", 
+                justifyContent: "space-between", 
+                alignItems: "center",
+                width: "180px",
+                height: "60px",
+                paddingLeft: "1rem",
+                paddingRight: "1rem",
+                boxSizing: "border-box"
+              }}
             >
               <div className="flex items-center" style={{flex: "1"}}>
                 <span className="uppercase text-xl font-semibold">Industry</span>
@@ -417,6 +427,14 @@ export default function MembershipPage() {
                         ? "text-white"
                         : "text-gray-300"
                     }`}
+                    style={{
+                      display: "flex", 
+                      justifyContent: "space-between", 
+                      alignItems: "center",
+                      padding: "0.5rem 0.75rem",
+                      width: "100%",
+                      boxSizing: "border-box"
+                    }}
                   >
                     <span>{industry}</span>
                     <img 
@@ -438,6 +456,16 @@ export default function MembershipPage() {
               className="bg-[#10221B] text-white w-[150px] h-[60px] rounded-lg flex items-center justify-between px-4"
               aria-expanded={desktopFilterOpen === 'format'}
               aria-controls="format-dropdown"
+              style={{
+                display: "flex", 
+                justifyContent: "space-between", 
+                alignItems: "center",
+                width: "150px",
+                height: "60px",
+                paddingLeft: "1rem",
+                paddingRight: "1rem",
+                boxSizing: "border-box"
+              }}
             >
               <div className="flex items-center" style={{flex: "1"}}>
                 <span className="uppercase text-xl font-semibold">Format</span>
@@ -480,6 +508,14 @@ export default function MembershipPage() {
                         ? "text-white"
                         : "text-gray-300"
                     }`}
+                    style={{
+                      display: "flex", 
+                      justifyContent: "space-between", 
+                      alignItems: "center",
+                      padding: "0.5rem 0.75rem",
+                      width: "100%",
+                      boxSizing: "border-box"
+                    }}
                   >
                     <span>{format}</span>
                     <img 
@@ -501,6 +537,16 @@ export default function MembershipPage() {
               className="bg-[#10221B] text-white w-[180px] h-[60px] rounded-lg flex items-center justify-between px-4"
               aria-expanded={desktopFilterOpen === 'language'}
               aria-controls="language-dropdown"
+              style={{
+                display: "flex", 
+                justifyContent: "space-between", 
+                alignItems: "center",
+                width: "180px",
+                height: "60px",
+                paddingLeft: "1rem",
+                paddingRight: "1rem",
+                boxSizing: "border-box"
+              }}
             >
               <div className="flex items-center" style={{flex: "1"}}>
                 <span className="uppercase text-xl font-semibold">Language</span>
@@ -543,6 +589,14 @@ export default function MembershipPage() {
                         ? "text-white"
                         : "text-gray-300"
                     }`}
+                    style={{
+                      display: "flex", 
+                      justifyContent: "space-between", 
+                      alignItems: "center",
+                      padding: "0.5rem 0.75rem",
+                      width: "100%",
+                      boxSizing: "border-box"
+                    }}
                   >
                     <span>{language}</span>
                     <img 
