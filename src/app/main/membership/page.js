@@ -376,7 +376,7 @@ export default function MembershipPage() {
               aria-expanded={desktopFilterOpen === 'industry'}
               aria-controls="industry-dropdown"
             >
-              <div className="flex items-center">
+              <div className="flex items-center" style={{flex: "1"}}>
                 <span className="uppercase text-xl font-semibold">Industry</span>
                 {selectedIndustry.length > 0 && (
                   <span className="ml-1 text-xs">
@@ -389,6 +389,7 @@ export default function MembershipPage() {
                 alt="Filter icon"
                 className="w-4 h-4 object-contain ml-4"
                 aria-hidden="true"
+                style={{marginLeft: "8px", flexShrink: 0}}
               />
             </button>
             
@@ -438,7 +439,7 @@ export default function MembershipPage() {
               aria-expanded={desktopFilterOpen === 'format'}
               aria-controls="format-dropdown"
             >
-              <div className="flex items-center">
+              <div className="flex items-center" style={{flex: "1"}}>
                 <span className="uppercase text-xl font-semibold">Format</span>
                 {selectedFormat.length > 0 && (
                   <span className="ml-1 text-xs">
@@ -451,6 +452,7 @@ export default function MembershipPage() {
                 alt="Filter icon"
                 className="w-4 h-4 object-contain ml-4"
                 aria-hidden="true"
+                style={{marginLeft: "8px", flexShrink: 0}}
               />
             </button>
             
@@ -500,7 +502,7 @@ export default function MembershipPage() {
               aria-expanded={desktopFilterOpen === 'language'}
               aria-controls="language-dropdown"
             >
-              <div className="flex items-center">
+              <div className="flex items-center" style={{flex: "1"}}>
                 <span className="uppercase text-xl font-semibold">Language</span>
                 {selectedLanguage.length > 0 && (
                   <span className="ml-1 text-xs">
@@ -513,6 +515,7 @@ export default function MembershipPage() {
                 alt="Filter icon"
                 className="w-4 h-4 object-contain ml-4"
                 aria-hidden="true"
+                style={{marginLeft: "8px", flexShrink: 0}}
               />
             </button>
             
