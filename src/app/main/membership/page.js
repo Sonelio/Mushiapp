@@ -389,7 +389,7 @@ export default function MembershipPage() {
                 alt="Filter icon"
                 className="w-4 h-4 object-contain ml-4"
                 aria-hidden="true"
-                style={{marginLeft: "0px", flexShrink: 0}}
+                style={{marginLeft: "8px", flexShrink: 0}}
               />
             </button>
             
@@ -400,7 +400,7 @@ export default function MembershipPage() {
                 role="dialog"
                 aria-label="Industry options"
                 onClick={(e) => e.stopPropagation()}
-                style={{minWidth: "150px"}}
+                style={{minWidth: "180px"}}
               >
                 {["DRINK", "FOOD", "FASHION", "BEAUTY", "HEALTH"].map((industry) => (
                   <div
@@ -412,7 +412,7 @@ export default function MembershipPage() {
                         setSelectedIndustry([...selectedIndustry, industry]);
                       }
                     }}
-                    className={`cursor-pointer px-4 py-2 text-xl font-semibold text-left uppercase flex items-center justify-between ${
+                    className={`cursor-pointer px-3 py-2 text-xl font-semibold text-left uppercase flex items-center justify-between ${
                       selectedIndustry.includes(industry)
                         ? "text-white"
                         : "text-gray-300"
@@ -475,7 +475,7 @@ export default function MembershipPage() {
                         setSelectedFormat([...selectedFormat, format]);
                       }
                     }}
-                    className={`cursor-pointer px-4 py-2 text-xl font-semibold text-left uppercase flex items-center justify-between ${
+                    className={`cursor-pointer px-3 py-2 text-xl font-semibold text-left uppercase flex items-center justify-between ${
                       selectedFormat.includes(format)
                         ? "text-white"
                         : "text-gray-300"
@@ -538,7 +538,7 @@ export default function MembershipPage() {
                         setSelectedLanguage([...selectedLanguage, language]);
                       }
                     }}
-                    className={`cursor-pointer px-4 py-2 text-xl font-semibold text-left uppercase flex items-center justify-between ${
+                    className={`cursor-pointer px-3 py-2 text-xl font-semibold text-left uppercase flex items-center justify-between ${
                       selectedLanguage.includes(language)
                         ? "text-white"
                         : "text-gray-300"
