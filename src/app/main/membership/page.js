@@ -217,9 +217,16 @@ export default function MembershipPage() {
         background: "#000000"
       }}
     >
+      <style jsx>{`
+        @media (min-width: 1280px) and (max-width: 1440px) {
+          .template-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          }
+        }
+      `}</style>
       {/* MAIN CONTENT AREA */}
       <main className="flex-1 px-4 py-2">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        <div className="template-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-6">
           {sortedTemplates.slice(0, visibleTemplates).map((item, index) => {
             // Only add the ref to the last item if there are more items to load
             if (index === visibleTemplates - 1 && visibleTemplates < sortedTemplates.length) {
