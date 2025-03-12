@@ -523,7 +523,7 @@ export default function MembershipPage() {
             {desktopFilterOpen === 'language' && (
               <div 
                 id="language-dropdown"
-                className="absolute bottom-full left-0 mb-2 w-[150px] bg-[#10221B] text-white rounded-lg shadow-lg z-30"
+                className="absolute bottom-full left-0 mb-2 w-[180px] bg-[#10221B] text-white rounded-lg shadow-lg z-30"
                 role="dialog"
                 aria-label="Language options"
                 onClick={(e) => e.stopPropagation()}
