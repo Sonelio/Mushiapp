@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '../lib/useAuth';
@@ -18,6 +18,8 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const isTemplatesActive = pathname === '/main/membership';
   const isCoursesActive = pathname.startsWith('/main/courses');
@@ -31,6 +33,26 @@ export default function Navbar() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuRef.current && 
+        !menuRef.current.contains(event.target as Node) &&
+        !menuButtonRef.current?.contains(event.target as Node)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   const ProfileImage = () => (
     <div className="w-14 h-14 rounded-[15px] bg-gray-400 overflow-hidden">
@@ -65,8 +87,34 @@ export default function Navbar() {
         <nav className="bg-[#11231C] rounded-[15px] overflow-hidden">
           <div className="px-4 sm:px-6">
             <div className="flex justify-between items-center h-20">
-              {/* Logo */}
-              <div className="flex-shrink-0">
+              {/* Mobile Menu Button */}
+              <div className="md:hidden">
+                <button
+                  ref={menuButtonRef}
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white p-2"
+                >
+                  <span className="sr-only">Open main menu</span>
+                  {isMenuOpen ? (
+                    <img
+                      src="/mobile-menu2.png"
+                      alt="Menu"
+                      className="h-6 w-6 object-contain"
+                      style={{ filter: 'brightness(0) invert(1)' }}
+                    />
+                  ) : (
+                    <img
+                      src="/mobile-menu1.png"
+                      alt="Menu"
+                      className="h-6 w-6 object-contain"
+                      style={{ filter: 'brightness(0) invert(1)' }}
+                    />
+                  )}
+                </button>
+              </div>
+
+              {/* Logo - Centered on mobile */}
+              <div className="flex-shrink-0 md:flex-shrink-0">
                 <Link href={"/main/membership" as Route} className="flex items-center">
                   <Image
                     src="/mushi-logo.png"
@@ -100,93 +148,54 @@ export default function Navbar() {
               </div>
 
               {/* Account Section - Desktop */}
-              <div className="hidden md:flex items-center space-x-3">
+              <div className="hidden md:flex items-center">
                 <Link href={"/main/account" as Route} className="flex items-center space-x-2">
                   <ProfileImage />
-                  <div className="text-sm mr-2 hidden md:block" style={{ marginTop: "2px" }}>
+                  <div className="text-sm mr-2" style={{ marginTop: "2px" }}>
                     <p className="text-[15px] font-semibold text-white" style={{ marginBottom: "4px", padding: "0px 2px" }}>Account</p>
                     <p className="text-[15px] font-semibold text-[#667B66]" style={{ padding: "0px 2px" }}>{user?.displayName || 'My Account'}</p>
                   </div>
                 </Link>
               </div>
 
-              {/* Mobile menu button */}
-              <div className="md:hidden flex items-center">
-                <button
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white p-2"
-                >
-                  <span className="sr-only">Open main menu</span>
-                  {!isMenuOpen ? (
-                    <svg
-                      className="block h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M4 6h16M4 12h16M4 18h16"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
-                      className="block h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  )}
-                </button>
+              {/* Mobile Profile Picture */}
+              <div className="md:hidden">
+                <Link href={"/main/account" as Route}>
+                  <ProfileImage />
+                </Link>
               </div>
             </div>
 
             {/* Mobile menu */}
-            <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
-              <div className="px-2 pt-2 pb-3 space-y-1 border-t border-gray-700">
-                {/* Account Section - Mobile */}
-                <div className="py-2">
-                  <Link href={"/main/account" as Route} className="flex items-center space-x-3 px-3 py-2">
-                    <ProfileImage />
-                    <div style={{ marginTop: "2px" }}>
-                      <p className="text-[15px] font-semibold text-white" style={{ marginBottom: "4px", padding: "0px 2px" }}>Account</p>
-                      <p className="text-[15px] font-semibold text-[#667B66]" style={{ padding: "0px 2px" }}>{user?.displayName || 'My Account'}</p>
-                    </div>
-                  </Link>
+            {isMenuOpen && (
+              <div ref={menuRef} className="md:hidden absolute top-full left-0 right-0 mx-4" style={{ marginTop: "1px" }}>
+                <div className="bg-[#11231C] overflow-hidden">
+                  <div style={{ padding: "8px 4px 12px 4px" }}>
+                    {/* Navigation Links - Mobile */}
+                    <Link
+                      href={"/main/membership" as Route}
+                      className={`block text-white text-[20px] font-semibold tracking-wide rounded-md transition-colors text-center ${
+                        isTemplatesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
+                      }`}
+                      style={{ width: '150px', margin: '0 auto', padding: '4px 1px' }}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      TEMPLATES
+                    </Link>
+                    <Link
+                      href={"/main/courses" as Route}
+                      className={`block text-white text-[20px] font-semibold tracking-wide rounded-md transition-colors text-center ${
+                        isCoursesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
+                      }`}
+                      style={{ width: '130px', margin: '0 auto', padding: '4px 1px' }}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      COURSES
+                    </Link>
+                  </div>
                 </div>
-
-                {/* Navigation Links - Mobile */}
-                <Link
-                  href={"/main/membership" as Route}
-                  className={`block px-3 py-2 text-white text-[20px] font-semibold tracking-wide rounded-md transition-colors ${
-                    isTemplatesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  TEMPLATES
-                </Link>
-                <Link
-                  href={"/main/courses" as Route}
-                  className={`block px-3 py-2 text-white text-[20px] font-semibold tracking-wide rounded-md transition-colors ${
-                    isCoursesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  COURSES
-                </Link>
               </div>
-            </div>
+            )}
           </div>
         </nav>
       </div>
