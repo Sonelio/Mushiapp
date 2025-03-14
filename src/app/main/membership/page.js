@@ -278,14 +278,16 @@ export default function MembershipPage() {
       </main>
 
       {/* Mobile Bottom Bar */}
-      <div className="md:hidden fixed bottom-4 flex justify-center z-20 w-full px-4">
+      <div className="md:hidden fixed bottom-4 left-0 right-0 flex justify-center items-center z-20 w-full px-4">
         <button
           onClick={() => setFilterOpen(true)}
-          className="bg-[#203C1F] text-white w-[280px] h-[60px] rounded-lg flex items-center justify-center gap-2"
+          className="bg-[#10221B] text-white w-[280px] h-[60px] rounded-lg flex items-center justify-center gap-2"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-          </svg>
+          <img 
+            src={filterOpen ? "/filter-bar-4.png" : "/filter-bar-1.png"}
+            alt="Filter icon"
+            className="md:hidden w-6 h-6 object-contain"
+          />
           <span className="uppercase text-xl font-semibold">
             Filters & Sort {activeFilterCount > 0 && `(${activeFilterCount})`}
           </span>
@@ -311,38 +313,132 @@ export default function MembershipPage() {
             </button>
           </div>
 
-          {/* Sort Options */}
+          {/* Sort Section */}
           <div className="mb-6">
-            <h3 className="text-xl font-bold uppercase mb-2">Sort By</h3>
-            <div className="space-y-2">
-              {["popular", "newest", "oldest", "saved"].map((option) => (
-                <div
+            <h3 className="text-xl font-bold uppercase mb-4 text-center">Sort By</h3>
+            <div className="flex flex-wrap gap-3 justify-center">
+              {["popular", "oldest", "newest", "saved"].map((option) => (
+                <button
                   key={option}
                   onClick={() => setSortOption(option)}
-                  className={`cursor-pointer px-3 py-2 text-xl font-semibold uppercase rounded-lg ${
+                  className={`px-2 py-1.5 text-[10px] font-semibold uppercase rounded-lg ${
                     sortOption === option 
                       ? "bg-[#203C1F] text-white" 
-                      : "text-gray-300"
+                      : "bg-[#10221B] text-gray-300"
                   }`}
                 >
                   {option}
-                </div>
+                </button>
               ))}
             </div>
           </div>
 
-          {/* Filter Options */}
-          <FilterBar
-            selectedIndustry={selectedIndustry}
-            setSelectedIndustry={setSelectedIndustry}
-            selectedFormat={selectedFormat}
-            setSelectedFormat={setSelectedFormat}
-            selectedLanguage={selectedLanguage}
-            setSelectedLanguage={setSelectedLanguage}
-          />
+          {/* Industry Section */}
+          <div className="mb-6">
+            <h3 className="text-xl font-bold uppercase mb-4 text-center">Industry</h3>
+            <div className="flex flex-col gap-3 items-center">
+              <div className="flex gap-3">
+                {["BEAUTY", "HEALTH", "FASHION"].map((industry) => (
+                  <button
+                    key={industry}
+                    onClick={() => {
+                      if (selectedIndustry.includes(industry)) {
+                        setSelectedIndustry(selectedIndustry.filter(i => i !== industry));
+                      } else {
+                        setSelectedIndustry([...selectedIndustry, industry]);
+                      }
+                    }}
+                    className={`px-2 py-1.5 text-[10px] font-semibold uppercase rounded-lg hover:bg-[#0C1310] transition-colors ${
+                      selectedIndustry.includes(industry)
+                        ? "bg-[#203C1F] text-white"
+                        : "bg-[#10221B] text-gray-300"
+                    }`}
+                  >
+                    {industry}
+                  </button>
+                ))}
+              </div>
+              <div className="flex gap-3">
+                {["FOOD", "DRINK"].map((industry) => (
+                  <button
+                    key={industry}
+                    onClick={() => {
+                      if (selectedIndustry.includes(industry)) {
+                        setSelectedIndustry(selectedIndustry.filter(i => i !== industry));
+                      } else {
+                        setSelectedIndustry([...selectedIndustry, industry]);
+                      }
+                    }}
+                    className={`px-2 py-1.5 text-[10px] font-semibold uppercase rounded-lg hover:bg-[#0C1310] transition-colors ${
+                      selectedIndustry.includes(industry)
+                        ? "bg-[#203C1F] text-white"
+                        : "bg-[#10221B] text-gray-300"
+                    }`}
+                  >
+                    {industry}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Format and Language Section */}
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            {/* Format */}
+            <div>
+              <h3 className="text-xl font-bold uppercase mb-4 text-center">Format</h3>
+              <div className="flex gap-3 justify-center">
+                {["Feed", "Story"].map((format) => (
+                  <button
+                    key={format}
+                    onClick={() => {
+                      if (selectedFormat.includes(format)) {
+                        setSelectedFormat(selectedFormat.filter(f => f !== format));
+                      } else {
+                        setSelectedFormat([...selectedFormat, format]);
+                      }
+                    }}
+                    className={`px-2 py-1.5 text-[10px] font-semibold uppercase rounded-lg hover:bg-[#0C1310] transition-colors ${
+                      selectedFormat.includes(format)
+                        ? "bg-[#203C1F] text-white"
+                        : "bg-[#10221B] text-gray-300"
+                    }`}
+                  >
+                    {format}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Language */}
+            <div>
+              <h3 className="text-xl font-bold uppercase mb-4 text-center">Language</h3>
+              <div className="flex gap-3 justify-center">
+                {["LT", "EN"].map((language) => (
+                  <button
+                    key={language}
+                    onClick={() => {
+                      if (selectedLanguage.includes(language)) {
+                        setSelectedLanguage(selectedLanguage.filter(l => l !== language));
+                      } else {
+                        setSelectedLanguage([...selectedLanguage, language]);
+                      }
+                    }}
+                    className={`px-2 py-1.5 text-[10px] font-semibold uppercase rounded-lg hover:bg-[#0C1310] transition-colors ${
+                      selectedLanguage.includes(language)
+                        ? "bg-[#203C1F] text-white"
+                        : "bg-[#10221B] text-gray-300"
+                    }`}
+                  >
+                    {language}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
 
           {/* Results count */}
-          <div className="mt-4 mb-4 px-3">
+          <div className="mt-4 mb-4 text-center">
             <span className="text-[20px] font-semibold text-[#667B66]">
               {sortedTemplates.length} results
             </span>
