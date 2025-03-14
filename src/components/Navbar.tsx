@@ -104,8 +104,8 @@ export default function Navbar() {
                 <Link href={"/main/account" as Route} className="flex items-center space-x-2">
                   <ProfileImage />
                   <div className="text-sm mr-2 hidden md:block">
-                    <p className="font-medium text-white">{user?.displayName || 'My Account'}</p>
-                    <p className="text-gray-400 text-xs">View profile</p>
+                    <p className="text-[15px] font-semibold text-gray-400">Account</p>
+                    <p className="text-[15px] font-semibold text-[#667B66]">{user?.displayName || 'My Account'}</p>
                   </div>
                 </Link>
               </div>
@@ -160,8 +160,8 @@ export default function Navbar() {
                   <Link href={"/main/account" as Route} className="flex items-center space-x-3 px-3 py-2">
                     <ProfileImage />
                     <div>
-                      <p className="font-medium text-white">{user?.displayName || 'My Account'}</p>
-                      <p className="text-sm text-gray-400">View profile</p>
+                      <p className="text-[15px] font-semibold text-gray-400">Account</p>
+                      <p className="text-[15px] font-semibold text-[#667B66]">{user?.displayName || 'My Account'}</p>
                     </div>
                   </Link>
                 </div>
