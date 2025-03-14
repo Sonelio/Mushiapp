@@ -168,8 +168,8 @@ export default function Navbar() {
 
             {/* Mobile menu */}
             {isMenuOpen && (
-              <div ref={menuRef} className="md:hidden absolute top-full left-0 right-0 mx-4" style={{ marginTop: "1px" }}>
-                <div className="bg-[#11231C] overflow-hidden">
+              <div ref={menuRef} className="md:hidden absolute top-full left-0 right-0 mx-4" style={{ marginTop: "-14px" }}>
+                <div className="bg-[#11231C] overflow-hidden" style={{ borderRadius: "15px" }}>
                   <div style={{ padding: "8px 4px 12px 4px" }}>
                     {/* Navigation Links - Mobile */}
                     <Link
