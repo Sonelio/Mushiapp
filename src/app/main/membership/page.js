@@ -383,17 +383,17 @@ export default function MembershipPage() {
           <div className="relative">
             <button
               onClick={() => setDesktopFilterOpen(prev => prev === 'industry' ? null : 'industry')}
-              className="bg-[#10221B] text-white w-[180px] h-[60px] rounded-lg flex items-center justify-between px-4"
+              className="bg-[#10221B] text-white rounded-lg flex items-center"
               aria-expanded={desktopFilterOpen === 'industry'}
               aria-controls="industry-dropdown"
               style={{
                 display: "flex", 
                 justifyContent: "space-between", 
                 alignItems: "center",
-                width: "180px",
+                width: "155px",
                 height: "60px",
-                paddingLeft: "1rem",
-                paddingRight: "1rem",
+                paddingLeft: "13px",
+                paddingRight: "14px",
                 boxSizing: "border-box"
               }}
             >
@@ -408,7 +408,7 @@ export default function MembershipPage() {
               <img 
                 src="/filter-bar-1.png"
                 alt="Filter icon"
-                className="w-4 h-4 object-contain ml-1"
+                className="w-4 h-4 object-contain"
                 aria-hidden="true"
                 style={{marginLeft: "8px", flexShrink: 0}}
               />
@@ -464,17 +464,17 @@ export default function MembershipPage() {
           <div className="relative">
             <button
               onClick={() => setDesktopFilterOpen(prev => prev === 'format' ? null : 'format')}
-              className="bg-[#10221B] text-white w-[150px] h-[60px] rounded-lg flex items-center justify-between px-4"
+              className="bg-[#10221B] text-white rounded-lg flex items-center"
               aria-expanded={desktopFilterOpen === 'format'}
               aria-controls="format-dropdown"
               style={{
                 display: "flex", 
                 justifyContent: "space-between", 
                 alignItems: "center",
-                width: "150px",
+                width: "140px",
                 height: "60px",
-                paddingLeft: "1rem",
-                paddingRight: "1rem",
+                paddingLeft: "13px",
+                paddingRight: "16px",
                 boxSizing: "border-box"
               }}
             >
@@ -489,7 +489,7 @@ export default function MembershipPage() {
               <img 
                 src="/filter-bar-1.png"
                 alt="Filter icon"
-                className="w-4 h-4 object-contain ml-4"
+                className="w-4 h-4 object-contain"
                 aria-hidden="true"
                 style={{marginLeft: "8px", flexShrink: 0}}
               />
@@ -545,17 +545,17 @@ export default function MembershipPage() {
           <div className="relative">
             <button
               onClick={() => setDesktopFilterOpen(prev => prev === 'language' ? null : 'language')}
-              className="bg-[#10221B] text-white w-[180px] h-[60px] rounded-lg flex items-center justify-between px-4"
+              className="bg-[#10221B] text-white rounded-lg flex items-center"
               aria-expanded={desktopFilterOpen === 'language'}
               aria-controls="language-dropdown"
               style={{
                 display: "flex", 
                 justifyContent: "space-between", 
                 alignItems: "center",
-                width: "180px",
+                width: "175px",
                 height: "60px",
-                paddingLeft: "1rem",
-                paddingRight: "1rem",
+                paddingLeft: "13px",
+                paddingRight: "17px",
                 boxSizing: "border-box"
               }}
             >
@@ -570,7 +570,7 @@ export default function MembershipPage() {
               <img 
                 src="/filter-bar-1.png"
                 alt="Filter icon"
-                className="w-4 h-4 object-contain ml-4"
+                className="w-4 h-4 object-contain"
                 aria-hidden="true"
                 style={{marginLeft: "8px", flexShrink: 0}}
               />
