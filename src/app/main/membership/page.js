@@ -628,7 +628,7 @@ export default function MembershipPage() {
           <div 
             className="bg-[#10221B] rounded-[10px] flex items-center px-4"
             style={{
-              width: "276px",
+              width: "274px",
               height: "60px",
               paddingLeft: "13px",
               paddingRight: "0px"
