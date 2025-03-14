@@ -17,9 +17,20 @@ export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const isTemplatesActive = pathname === '/main/membership';
   const isCoursesActive = pathname.startsWith('/main/courses');
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const ProfileImage = () => (
     <div className="w-14 h-14 rounded-[15px] bg-gray-400 overflow-hidden">
@@ -49,7 +60,7 @@ export default function Navbar() {
   );
 
   return (
-    <div className="absolute inset-x-0 top-0 z-50 bg-black">
+    <div className="fixed inset-x-0 top-0 z-50">
       <div className="mx-4 my-6">
         <nav className="bg-[#11231C] rounded-[15px] overflow-hidden">
           <div className="px-4 sm:px-6">

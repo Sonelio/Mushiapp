@@ -408,7 +408,7 @@ export default function MembershipPage() {
               <img 
                 src="/filter-bar-1.png"
                 alt="Filter icon"
-                className="w-4 h-4 object-contain ml-4"
+                className="w-4 h-4 object-contain ml-1"
                 aria-hidden="true"
                 style={{marginLeft: "8px", flexShrink: 0}}
               />
