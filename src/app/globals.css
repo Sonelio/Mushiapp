@@ -36,7 +36,7 @@ body {
 }
 
 #main-content {
-  padding-top: 8rem; /* Increased to account for fixed navbar */
+  padding-top: 6rem; /* Reduced from 8rem to 6rem to bring content closer to navbar */
   padding-bottom: 2.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
