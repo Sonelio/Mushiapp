@@ -630,7 +630,7 @@ export default function MembershipPage() {
             <div className="relative border border-[#203C1F] rounded-[10px]">
               <button
                 onClick={() => setSortOpen(!sortOpen)}
-                className="bg-[#203C1F] text-white w-[150px] h-[44px] rounded-[10px] flex items-center justify-between px-3"
+                className="bg-[#203C1F] text-white w-[130px] h-[40px] rounded-[10px] flex items-center justify-between px-3"
                 aria-expanded={sortOpen}
                 aria-controls="sort-dropdown"
                 aria-label="Sort templates"
