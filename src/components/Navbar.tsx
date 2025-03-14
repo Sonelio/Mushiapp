@@ -49,7 +49,7 @@ export default function Navbar() {
   );
 
   return (
-    <div className="sticky top-0 w-full z-50">
+    <div className="fixed w-full z-50 top-0">
       <div className="mx-4 my-6">
         <nav className="bg-[#11231C] rounded-[15px] overflow-hidden">
           <div className="px-4 sm:px-6">
@@ -72,7 +72,7 @@ export default function Navbar() {
               <div className="hidden md:flex items-center space-x-8">
                 <Link
                   href={"/main/membership" as Route}
-                  className={`text-white text-[20px] font-semibold tracking-wide px-6 py-4 rounded-md transition-colors ${
+                  className={`text-white text-sm font-medium tracking-wide px-6 py-4 rounded-md transition-colors ${
                     isTemplatesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
                   }`}
                 >
@@ -80,7 +80,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   href={"/main/courses" as Route}
-                  className={`text-white text-[20px] font-semibold tracking-wide px-6 py-4 rounded-md transition-colors ${
+                  className={`text-white text-sm font-medium tracking-wide px-6 py-4 rounded-md transition-colors ${
                     isCoursesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
                   }`}
                 >
@@ -158,7 +158,7 @@ export default function Navbar() {
                 {/* Navigation Links - Mobile */}
                 <Link
                   href={"/main/membership" as Route}
-                  className={`block px-3 py-2 text-white text-[20px] font-semibold tracking-wide rounded-md transition-colors ${
+                  className={`block px-3 py-2 text-white text-sm font-medium tracking-wide rounded-md transition-colors ${
                     isTemplatesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
@@ -167,7 +167,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   href={"/main/courses" as Route}
-                  className={`block px-3 py-2 text-white text-[20px] font-semibold tracking-wide rounded-md transition-colors ${
+                  className={`block px-3 py-2 text-white text-sm font-medium tracking-wide rounded-md transition-colors ${
                     isCoursesActive ? 'bg-[#0C1813]' : 'hover:bg-[#0C1813]'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
