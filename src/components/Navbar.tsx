@@ -49,7 +49,7 @@ export default function Navbar() {
   );
 
   return (
-    <div className="fixed w-full z-50 top-0">
+    <div className="sticky top-0 w-full z-50">
       <div className="mx-4 my-6">
         <nav className="bg-[#11231C] rounded-[15px] overflow-hidden">
           <div className="px-4 sm:px-6">
