@@ -221,7 +221,7 @@ export default function AccountPage() {
           {isUploading && <p className="text-xs text-[#9DB396] mb-2">Uploading...</p>}
         </div>
 
-        <h2 className="text-center font-extrabold text-white mb-8 text-[50px] tracking-tight leading-none">
+        <h2 className="text-center font-extrabold text-white mb-8 tracking-tight leading-none" style={{ fontSize: "45px" }}>
           Account Settings
         </h2>
 
