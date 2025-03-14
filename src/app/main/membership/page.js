@@ -625,17 +625,29 @@ export default function MembershipPage() {
 
         {/* RIGHT SIDE - Sort and Results */}
         <div className="hidden md:flex items-center gap-2">
-          <div className="bg-[#10221B] rounded-[10px] flex items-center px-4 h-[60px]">
+          <div 
+            className="bg-[#10221B] rounded-[10px] flex items-center px-4"
+            style={{
+              width: "276px",
+              height: "60px",
+              paddingLeft: "13px",
+              paddingRight: "0px"
+            }}
+          >
             {/* SORT DROPDOWN */}
             <div className="relative border border-[#203C1F] rounded-[10px]">
               <button
                 onClick={() => setSortOpen(!sortOpen)}
-                className="bg-[#203C1F] text-white w-[130px] h-[40px] rounded-[10px] flex items-center justify-between px-3"
+                className="bg-[#203C1F] text-white rounded-[10px] flex items-center justify-between px-3"
+                style={{
+                  width: "130px",
+                  height: "36px"
+                }}
                 aria-expanded={sortOpen}
                 aria-controls="sort-dropdown"
                 aria-label="Sort templates"
               >
-                <span className="uppercase text-xl font-bold">Sort</span>
+                <span className="uppercase text-[20px] font-semibold">Sort</span>
                 <img 
                   src="/filter-bar-1.png"
                   alt="Sort icon"
