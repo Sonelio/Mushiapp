@@ -221,7 +221,7 @@ export default function AccountPage() {
           {isUploading && <p className="text-xs text-[#9DB396] mb-2">Uploading...</p>}
         </div>
 
-        <h2 className="text-center font-bold text-white mb-8 text-[50px]">
+        <h2 className="text-center font-extrabold text-white mb-8 text-[50px] tracking-tight leading-none">
           Account Settings
         </h2>
 
