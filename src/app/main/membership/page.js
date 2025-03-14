@@ -625,12 +625,12 @@ export default function MembershipPage() {
 
         {/* RIGHT SIDE - Sort and Results */}
         <div className="hidden md:flex items-center gap-2">
-          <div className="bg-[#10221B] rounded-lg flex items-center">
+          <div className="bg-[#10221B] rounded-[10px] flex items-center px-4 h-[60px]">
             {/* SORT DROPDOWN */}
-            <div className="relative">
+            <div className="relative border border-[#203C1F] rounded-[10px]">
               <button
                 onClick={() => setSortOpen(!sortOpen)}
-                className="bg-[#203C1F] text-white w-[150px] h-[60px] rounded-lg flex items-center justify-between px-4"
+                className="bg-[#203C1F] text-white w-[150px] h-[44px] rounded-[10px] flex items-center justify-between px-3"
                 aria-expanded={sortOpen}
                 aria-controls="sort-dropdown"
                 aria-label="Sort templates"
@@ -677,13 +677,9 @@ export default function MembershipPage() {
                 </div>
               )}
             </div>
-
-            {/* Results count */}
-            <div className="flex items-center px-4 border-l border-white/10">
-              <span className="text-[20px] font-semibold text-[#667B66]" role="status">
-                {sortedTemplates.length} results
-              </span>
-            </div>
+            <span className="text-[20px] font-semibold text-[#667B66] ml-4" role="status">
+              {sortedTemplates.length} results
+            </span>
           </div>
 
           {/* Support Button */}
