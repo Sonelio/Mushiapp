@@ -16,11 +16,11 @@ interface TemplateCardProps {
 
 const TemplateCard = forwardRef<HTMLDivElement, TemplateCardProps>(({ template, isSaved, onToggleSave }, ref) => {
   return (
-    <div ref={ref} className="relative group rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-white">
+    <div ref={ref} className="relative group rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-white aspect-square">
       {/* Card Image with Hover Effect */}
       {template.imageUrl && (
         <>
-          <div className="relative h-[400px] sm:h-[350px] lg:h-[400px] overflow-hidden">
+          <div className="relative w-full h-full overflow-hidden">
             <img
               src={template.imageUrl}
               alt={template.title}
