@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "../../../lib/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
@@ -17,7 +17,23 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Set initial value
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+    
+    // Cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -33,13 +49,13 @@ export default function LoginPage() {
   return (
     <div className={`h-screen w-screen flex items-center justify-center relative overflow-hidden ${poppins.className}`}>
       <Image
-        src="/background.png"
+        src={isMobile ? "/mobile-loginbackground.png" : "/background.png"}
         alt="Background Pattern"
         fill
         priority
         className="object-cover w-full h-full absolute top-0 left-0 z-0"
       />
-      <div className="p-8 rounded-[30px] w-full max-w-[450px] relative z-10" style={{ backgroundColor: "#20382E" }}>
+      <div className="p-8 md:p-8 rounded-[30px] w-[85%] md:w-full max-w-[450px] relative z-10 mx-4 md:mx-0" style={{ backgroundColor: "#20382E" }}>
         {/* App Logo */}
         <div className="flex justify-center mb-8">
           <Image
