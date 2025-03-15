@@ -31,6 +31,26 @@ export default function MembershipPage() {
   const [visibleTemplates, setVisibleTemplates] = useState(20);
   const observer = useRef();
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const filterPanelRef = useRef(null);
+  const filterButtonRef = useRef(null);
+
+  // Handle clicks outside the filter panel
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (filterOpen && 
+          filterPanelRef.current && 
+          filterButtonRef.current &&
+          !filterPanelRef.current.contains(event.target) &&
+          !filterButtonRef.current.contains(event.target)) {
+        setFilterOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [filterOpen]);
 
   // Check if we're on a mobile device
   useEffect(() => {
@@ -278,195 +298,151 @@ export default function MembershipPage() {
       </main>
 
       {/* Mobile Bottom Bar */}
-      <div className="md:hidden fixed bottom-4 left-0 right-0 flex justify-center items-center z-20 w-full px-4">
-        <button
-          onClick={() => setFilterOpen(true)}
-          className="bg-[#10221B] text-white w-[280px] h-[60px] rounded-lg flex items-center justify-center gap-2"
-        >
-          <img 
-            src={filterOpen ? "/filter-bar-4.png" : "/filter-bar-1.png"}
-            alt="Filter icon"
-            className="md:hidden w-6 h-6 object-contain"
-          />
-          <span className="uppercase text-xl font-semibold">
-            Filters & Sort {activeFilterCount > 0 && `(${activeFilterCount})`}
-          </span>
-        </button>
-      </div>
-
-      {/* MOBILE FILTER PANEL */}
-      <div 
-        className={`md:hidden fixed inset-x-0 bottom-0 bg-[#0e1814] z-30 transition-transform duration-300 shadow-lg rounded-t-xl ${
-          filterOpen ? 'translate-y-0' : 'translate-y-full'
-        }`}
-        style={{ maxHeight: "80vh" }}
-      >
-        <div className="p-4 overflow-y-auto flex flex-col" style={{ maxHeight: "calc(80vh - 40px)" }}>
-          <div className="flex justify-end items-center mb-4">
-            <button 
-              onClick={() => setFilterOpen(false)} 
-              className="p-2 rounded-full hover:bg-gray-700"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Sort Section */}
-          <div className="mb-6">
-            <h3 className="text-xl font-bold uppercase mb-4 text-center">Sort By</h3>
-            <div className="flex flex-wrap gap-3 justify-center">
-              {["popular", "oldest", "newest", "saved"].map((option) => (
-                <button
-                  key={option}
-                  onClick={() => setSortOption(option)}
-                  className={`px-2 py-1.5 text-[10px] font-semibold uppercase rounded-lg ${
-                    sortOption === option 
-                      ? "bg-[#203C1F] text-white" 
-                      : "bg-[#10221B] text-gray-300"
-                  }`}
-                >
-                  {option}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Industry Section */}
-          <div className="mb-6">
-            <h3 className="text-xl font-bold uppercase mb-4 text-center">Industry</h3>
-            <div className="flex flex-col gap-3 items-center">
-              <div className="flex gap-3">
-                {["BEAUTY", "HEALTH", "FASHION"].map((industry) => (
-                  <button
-                    key={industry}
-                    onClick={() => {
-                      if (selectedIndustry.includes(industry)) {
-                        setSelectedIndustry(selectedIndustry.filter(i => i !== industry));
-                      } else {
-                        setSelectedIndustry([...selectedIndustry, industry]);
-                      }
-                    }}
-                    className={`px-2 py-1.5 text-[10px] font-semibold uppercase rounded-lg hover:bg-[#0C1310] transition-colors ${
-                      selectedIndustry.includes(industry)
-                        ? "bg-[#203C1F] text-white"
-                        : "bg-[#10221B] text-gray-300"
-                    }`}
-                  >
-                    {industry}
-                  </button>
-                ))}
-              </div>
-              <div className="flex gap-3">
-                {["FOOD", "DRINK"].map((industry) => (
-                  <button
-                    key={industry}
-                    onClick={() => {
-                      if (selectedIndustry.includes(industry)) {
-                        setSelectedIndustry(selectedIndustry.filter(i => i !== industry));
-                      } else {
-                        setSelectedIndustry([...selectedIndustry, industry]);
-                      }
-                    }}
-                    className={`px-2 py-1.5 text-[10px] font-semibold uppercase rounded-lg hover:bg-[#0C1310] transition-colors ${
-                      selectedIndustry.includes(industry)
-                        ? "bg-[#203C1F] text-white"
-                        : "bg-[#10221B] text-gray-300"
-                    }`}
-                  >
-                    {industry}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Format and Language Section */}
-          <div className="grid grid-cols-2 gap-4 mb-6">
-            {/* Format */}
-            <div>
-              <h3 className="text-xl font-bold uppercase mb-4 text-center">Format</h3>
-              <div className="flex gap-3 justify-center">
-                {["Feed", "Story"].map((format) => (
-                  <button
-                    key={format}
-                    onClick={() => {
-                      if (selectedFormat.includes(format)) {
-                        setSelectedFormat(selectedFormat.filter(f => f !== format));
-                      } else {
-                        setSelectedFormat([...selectedFormat, format]);
-                      }
-                    }}
-                    className={`px-2 py-1.5 text-[10px] font-semibold uppercase rounded-lg hover:bg-[#0C1310] transition-colors ${
-                      selectedFormat.includes(format)
-                        ? "bg-[#203C1F] text-white"
-                        : "bg-[#10221B] text-gray-300"
-                    }`}
-                  >
-                    {format}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Language */}
-            <div>
-              <h3 className="text-xl font-bold uppercase mb-4 text-center">Language</h3>
-              <div className="flex gap-3 justify-center">
-                {["LT", "EN"].map((language) => (
-                  <button
-                    key={language}
-                    onClick={() => {
-                      if (selectedLanguage.includes(language)) {
-                        setSelectedLanguage(selectedLanguage.filter(l => l !== language));
-                      } else {
-                        setSelectedLanguage([...selectedLanguage, language]);
-                      }
-                    }}
-                    className={`px-2 py-1.5 text-[10px] font-semibold uppercase rounded-lg hover:bg-[#0C1310] transition-colors ${
-                      selectedLanguage.includes(language)
-                        ? "bg-[#203C1F] text-white"
-                        : "bg-[#10221B] text-gray-300"
-                    }`}
-                  >
-                    {language}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Results count */}
-          <div className="mt-4 mb-4 text-center">
-            <span className="text-[20px] font-semibold text-[#667B66]">
-              {sortedTemplates.length} results
+      <div className="md:hidden fixed bottom-4 left-0 right-0 flex justify-between items-center z-20 w-full">
+        <div className="flex items-center gap-3 mx-4">
+          <button
+            ref={filterButtonRef}
+            onClick={() => setFilterOpen(!filterOpen)}
+            className="bg-[#11231C] text-white w-[280px] h-[60px] rounded-lg flex items-center justify-end pr-6 relative"
+          >
+            <img 
+              src={filterOpen ? "/mobile-filter2.png" : "/mobile-filter1.png"}
+              alt="Filter icon"
+              className="md:hidden w-6 h-6 object-contain absolute left-5"
+            />
+            <span className="uppercase text-2xl font-semibold">
+              Filters & Sort {activeFilterCount > 0 && `(${activeFilterCount})`}
             </span>
-          </div>
+          </button>
 
-          <div className="mt-auto space-y-4">
-            {/* Apply Button */}
-            <button 
-              onClick={() => setFilterOpen(false)}
-              className="w-full bg-[#203C1F] hover:bg-[#203C1F]/80 text-white h-[60px] rounded-lg uppercase text-xl font-semibold"
-            >
-              Apply
-            </button>
+          <button
+            onClick={() => window.open('mailto:support@example.com')}
+            className="bg-[#11231C] text-white w-[64px] h-[60px] rounded-lg flex items-center justify-center"
+          >
+            <img
+              src="/mobile-support1.png"
+              alt="Support icon"
+              className="w-7 h-7 object-contain"
+            />
+          </button>
+        </div>
 
-            {/* Support Button */}
-            <button
-              onClick={() => window.open('mailto:support@example.com')}
-              className="bg-[#10221B] text-white w-[150px] h-[60px] rounded-lg flex items-center justify-between px-4"
-            >
-              <div className="flex items-center gap-2">
-                <img
-                  src="/supporticon.png"
-                  alt="Support icon"
-                  className="w-6 h-6 object-contain"
-                />
-                <span className="uppercase text-xl font-semibold">Support</span>
+        {/* MOBILE FILTER PANEL */}
+        <div 
+          ref={filterPanelRef}
+          className={`md:hidden absolute bottom-full left-0 right-0 bg-[#11231C] z-30 transition-all duration-300 shadow-lg rounded-xl mx-4 ${
+            filterOpen ? 'opacity-100 translate-y-0 mb-4' : 'opacity-0 translate-y-1/4 pointer-events-none'
+          }`}
+          style={{ maxHeight: "80vh" }}
+        >
+          <div className="p-4 overflow-y-auto flex flex-col" style={{ maxHeight: "calc(80vh - 40px)" }}>
+            {/* Sort Section */}
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold uppercase mb-4 text-center">Sort By</h3>
+              <div className="flex items-center justify-between px-2">
+                {["popular", "oldest", "newest", "saved"].map((option) => (
+                  <button
+                    key={option}
+                    onClick={() => setSortOption(option)}
+                    className={`px-3 py-2 text-[13px] font-bold uppercase rounded-lg ${
+                      sortOption === option 
+                        ? "bg-[#0C1813] text-white" 
+                        : "bg-[#10221B] text-gray-300"
+                    }`}
+                  >
+                    {option}
+                  </button>
+                ))}
               </div>
-            </button>
+            </div>
+
+            {/* Industry Section */}
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold uppercase mb-4 text-center">Industry</h3>
+              <div className="flex flex-wrap gap-3 justify-center">
+                {["FOOD", "DRINK", "FASHION", "BEAUTY", "HEALTH"].map((industry) => (
+                  <button
+                    key={industry}
+                    onClick={() => {
+                      if (selectedIndustry.includes(industry)) {
+                        setSelectedIndustry(selectedIndustry.filter(i => i !== industry));
+                      } else {
+                        setSelectedIndustry([...selectedIndustry, industry]);
+                      }
+                    }}
+                    className={`px-4 py-2 text-[15px] font-bold uppercase rounded-lg ${
+                      selectedIndustry.includes(industry)
+                        ? "bg-[#0C1813] text-white"
+                        : "bg-[#10221B] text-gray-300"
+                    }`}
+                  >
+                    {industry}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Format and Language Section */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              {/* Format */}
+              <div>
+                <h3 className="text-2xl font-bold uppercase mb-4 text-center">Format</h3>
+                <div className="flex gap-3 items-center justify-center">
+                  {["Feed", "Story"].map((format) => (
+                    <button
+                      key={format}
+                      onClick={() => {
+                        if (selectedFormat.includes(format)) {
+                          setSelectedFormat(selectedFormat.filter(f => f !== format));
+                        } else {
+                          setSelectedFormat([...selectedFormat, format]);
+                        }
+                      }}
+                      className={`px-4 py-2 text-[15px] font-bold uppercase rounded-lg ${
+                        selectedFormat.includes(format)
+                          ? "bg-[#0C1813] text-white"
+                          : "bg-[#10221B] text-gray-300"
+                      }`}
+                    >
+                      {format}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Language */}
+              <div>
+                <h3 className="text-2xl font-bold uppercase mb-4 text-center">Language</h3>
+                <div className="flex gap-3 items-center justify-center">
+                  {["LT", "EN"].map((language) => (
+                    <button
+                      key={language}
+                      onClick={() => {
+                        if (selectedLanguage.includes(language)) {
+                          setSelectedLanguage(selectedLanguage.filter(l => l !== language));
+                        } else {
+                          setSelectedLanguage([...selectedLanguage, language]);
+                        }
+                      }}
+                      className={`px-4 py-2 text-[15px] font-bold uppercase rounded-lg ${
+                        selectedLanguage.includes(language)
+                          ? "bg-[#0C1813] text-white"
+                          : "bg-[#10221B] text-gray-300"
+                      }`}
+                    >
+                      {language}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Results count */}
+            <div className="mt-4 mb-4 text-center">
+              <span className="text-[20px] font-semibold text-[#667B66]">
+                {sortedTemplates.length} results
+              </span>
+            </div>
           </div>
         </div>
       </div>
