@@ -438,7 +438,7 @@ export default function MembershipPage() {
             </div>
 
             {/* Results count */}
-            <div className="text-center -mt-4">
+            <div className="text-center -mt-6">
               <span className="text-[20px] font-semibold text-[#667B66]">
                 {sortedTemplates.length} results
               </span>
