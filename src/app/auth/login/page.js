@@ -107,7 +107,7 @@ export default function LoginPage() {
 
         {/* Sign Up Link */}
         <p className="text-center mt-6">
-          Don't have an account?{" "}
+          First time here?{" "}
           <a href="https://mushi.agency/" className="font-medium text-[#1D6D1E]" target="_blank" rel="noopener noreferrer">
             Create account
           </a>
