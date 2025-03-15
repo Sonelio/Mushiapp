@@ -245,7 +245,7 @@ export default function MembershipPage() {
         }
       `}</style>
       {/* MAIN CONTENT AREA */}
-      <main className="flex-1 px-4 py-2 md:pt-2 pt-20">
+      <main className="flex-1 px-4 py-2 md:pt-2 pt-4">
         <div className="template-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-6">
           {sortedTemplates.slice(0, visibleTemplates).map((item, index) => {
             // Only add the ref to the last item if there are more items to load
@@ -438,7 +438,7 @@ export default function MembershipPage() {
             </div>
 
             {/* Results count */}
-            <div className="text-center -mt-3">
+            <div className="text-center -mt-4">
               <span className="text-[20px] font-semibold text-[#667B66]">
                 {sortedTemplates.length} results
               </span>
