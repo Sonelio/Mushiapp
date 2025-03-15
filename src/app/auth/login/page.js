@@ -47,7 +47,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={`h-screen w-screen flex items-center justify-center relative overflow-hidden pt-20 md:pt-0 ${poppins.className}`}>
+    <div className={`min-h-screen w-screen flex md:items-center justify-center relative overflow-hidden ${poppins.className}`}>
       <Image
         src={isMobile ? "/mobile-loginbackground.png" : "/background.png"}
         alt="Background Pattern"
@@ -55,7 +55,7 @@ export default function LoginPage() {
         priority
         className="object-cover w-full h-full absolute top-0 left-0 z-0"
       />
-      <div className="p-8 md:p-8 rounded-[30px] w-[85%] md:w-full max-w-[450px] relative z-10 mx-4 md:mx-0" style={{ backgroundColor: "#20382E" }}>
+      <div className="p-8 md:p-8 rounded-[30px] w-[85%] md:w-full max-w-[450px] relative z-10 mx-4 md:mx-0 mt-24 md:mt-0" style={{ backgroundColor: "#20382E" }}>
         {/* App Logo */}
         <div className="flex justify-center mb-8">
           <Image
