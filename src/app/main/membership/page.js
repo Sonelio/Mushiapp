@@ -311,7 +311,7 @@ export default function MembershipPage() {
               className="md:hidden w-6 h-6 object-contain absolute left-5"
             />
             <span className="uppercase text-2xl font-semibold">
-              Filters & Sort {activeFilterCount > 0 && `(${activeFilterCount})`}
+              Filters & Sort
             </span>
           </button>
 
@@ -438,7 +438,7 @@ export default function MembershipPage() {
             </div>
 
             {/* Results count */}
-            <div className="mt-4 mb-4 text-center">
+            <div className="text-center">
               <span className="text-[20px] font-semibold text-[#667B66]">
                 {sortedTemplates.length} results
               </span>
