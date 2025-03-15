@@ -299,7 +299,7 @@ export default function MembershipPage() {
 
       {/* Mobile Bottom Bar */}
       <div className="md:hidden fixed bottom-4 left-0 right-0 flex justify-between items-center z-20 w-full">
-        <div className="flex items-center gap-3 mx-4">
+        <div className="flex items-center gap-[14px] mx-4">
           <button
             ref={filterButtonRef}
             onClick={() => setFilterOpen(!filterOpen)}
