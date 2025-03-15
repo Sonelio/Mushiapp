@@ -47,7 +47,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={`h-screen w-screen flex items-center justify-center relative overflow-hidden ${poppins.className}`}>
+    <div className={`h-screen w-screen flex items-center justify-center relative overflow-hidden pt-20 md:pt-0 ${poppins.className}`}>
       <Image
         src={isMobile ? "/mobile-loginbackground.png" : "/background.png"}
         alt="Background Pattern"
