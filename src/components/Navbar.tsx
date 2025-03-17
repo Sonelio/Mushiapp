@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '../lib/useAuth';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import type { Route } from 'next';
 
 interface User {
@@ -14,7 +14,6 @@ interface User {
 
 export default function Navbar() {
   const { user } = useAuth() as { user: User | null; loading: boolean };
-  const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
