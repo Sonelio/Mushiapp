@@ -12,6 +12,8 @@ export default function CourseContent() {
     troubleshooting: false
   });
 
+  const [selectedLesson, setSelectedLesson] = useState<string>('digital-advertising');
+
   const [completedLessons, setCompletedLessons] = useState<string[]>([
     'digital-advertising',
     'data-pixel'
@@ -76,7 +78,7 @@ export default function CourseContent() {
           </Link>
 
           {/* Course Content List */}
-          <div className="bg-[#10221B] p-6 rounded-[20px]">
+          <div className="bg-[#10221B] rounded-[20px]">
             {/* Course Sections */}
             <div className="bg-[#10221B] rounded-[20px]">
               {/* Theory Section */}
@@ -99,8 +101,13 @@ export default function CourseContent() {
                     {courseContent.theory.map(item => (
                       <div 
                         key={item.id} 
-                        className="p-4 hover:bg-black/20 cursor-pointer text-white hover:text-white transition-colors"
-                        onClick={() => toggleLesson(item.id)}
+                        className={`p-4 cursor-pointer text-white transition-colors ${
+                          selectedLesson === item.id && completedLessons.includes(item.id) ? 'bg-black' : ''
+                        }`}
+                        onClick={() => {
+                          toggleLesson(item.id);
+                          setSelectedLesson(item.id);
+                        }}
                       >
                         <div className="flex items-center gap-3">
                           <Image
@@ -137,8 +144,13 @@ export default function CourseContent() {
                     {courseContent.stepByStep.map(item => (
                       <div 
                         key={item.id} 
-                        className="p-4 hover:bg-black/20 cursor-pointer text-white hover:text-white transition-colors"
-                        onClick={() => toggleLesson(item.id)}
+                        className={`p-4 cursor-pointer text-white transition-colors ${
+                          selectedLesson === item.id && completedLessons.includes(item.id) ? 'bg-black' : ''
+                        }`}
+                        onClick={() => {
+                          toggleLesson(item.id);
+                          setSelectedLesson(item.id);
+                        }}
                       >
                         <div className="flex items-center gap-3">
                           <Image
@@ -175,8 +187,13 @@ export default function CourseContent() {
                     {courseContent.optimization.map(item => (
                       <div 
                         key={item.id} 
-                        className="p-4 hover:bg-black/20 cursor-pointer text-white hover:text-white transition-colors"
-                        onClick={() => toggleLesson(item.id)}
+                        className={`p-4 cursor-pointer text-white transition-colors ${
+                          selectedLesson === item.id && completedLessons.includes(item.id) ? 'bg-black' : ''
+                        }`}
+                        onClick={() => {
+                          toggleLesson(item.id);
+                          setSelectedLesson(item.id);
+                        }}
                       >
                         <div className="flex items-center gap-3">
                           <Image
@@ -213,8 +230,13 @@ export default function CourseContent() {
                     {courseContent.troubleshooting.map(item => (
                       <div 
                         key={item.id} 
-                        className="p-4 hover:bg-black/20 cursor-pointer text-white hover:text-white transition-colors"
-                        onClick={() => toggleLesson(item.id)}
+                        className={`p-4 cursor-pointer text-white transition-colors ${
+                          selectedLesson === item.id && completedLessons.includes(item.id) ? 'bg-black' : ''
+                        }`}
+                        onClick={() => {
+                          toggleLesson(item.id);
+                          setSelectedLesson(item.id);
+                        }}
                       >
                         <div className="flex items-center gap-3">
                           <Image
