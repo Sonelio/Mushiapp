@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '../lib/useAuth';
 import { useRouter, usePathname } from 'next/navigation';
-import { Route } from 'next';
+import type { Route } from 'next';
 
 interface User {
   photoURL?: string;
