@@ -64,13 +64,27 @@ export default function CourseContent() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F0F] text-white p-8">
-      <div className="flex gap-6">
-        <div className="w-[350px] space-y-6">
+    <div className="min-h-screen bg-[#0B0F0F] text-white p-8 pb-24 lg:pb-8">
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Video Player Section - Moved up for mobile */}
+        <div className="flex-1 space-y-6 order-1 lg:order-2">
+          {/* Video Player */}
+          <div className="bg-[#10221B] rounded-[20px] aspect-video relative">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center">
+                <div className="text-xl mb-4">Video Player</div>
+                <p className="text-[#667B66]">Content will be available soon</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Course Content List - Moved down for mobile */}
+        <div className="w-full lg:w-[350px] space-y-6 order-2 lg:order-1">
           {/* Back Button */}
           <Link 
             href="/main/courses"
-            className="inline-flex items-center text-white bg-[#10221B] hover:bg-[#10221B] transition-colors gap-2 px-4 py-2 rounded-[15px]"
+            className="hidden lg:inline-flex items-center text-white bg-[#10221B] hover:bg-[#10221B] transition-colors gap-2 px-4 py-2 rounded-[15px]"
           >
             <Image 
               src="/courses-back.png"
@@ -124,7 +138,7 @@ export default function CourseContent() {
                               height={20}
                             />
                           </div>
-                          <span>{item.title}</span>
+                          <span className="font-medium">{item.title}</span>
                         </div>
                       </div>
                     ))}
@@ -171,7 +185,7 @@ export default function CourseContent() {
                               height={20}
                             />
                           </div>
-                          <span>{item.title}</span>
+                          <span className="font-medium">{item.title}</span>
                         </div>
                       </div>
                     ))}
@@ -218,7 +232,7 @@ export default function CourseContent() {
                               height={20}
                             />
                           </div>
-                          <span>{item.title}</span>
+                          <span className="font-medium">{item.title}</span>
                         </div>
                       </div>
                     ))}
@@ -265,7 +279,7 @@ export default function CourseContent() {
                               height={20}
                             />
                           </div>
-                          <span>{item.title}</span>
+                          <span className="font-medium">{item.title}</span>
                         </div>
                       </div>
                     ))}
@@ -275,23 +289,14 @@ export default function CourseContent() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Video Player Section */}
-        <div className="flex-1 space-y-6">
-          {/* Video Player */}
-          <div className="bg-[#10221B] rounded-[20px] aspect-video relative">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-xl mb-4">Video Player</div>
-                <p className="text-[#667B66]">Content will be available soon</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Navigation Button */}
-          <div className="flex justify-end">
-            <button className="bg-[#10221B] hover:bg-[#1A3429] text-white px-6 py-3 rounded-[15px] flex items-center gap-2 transition-colors">
-              <span>COMPLETE & CONTINUE</span>
+      {/* Navigation Button - Fixed at bottom on mobile */}
+      <div className="fixed lg:static bottom-0 left-0 right-0 p-4 lg:p-0 bg-[#0B0F0F] lg:bg-transparent lg:mt-6">
+        <div className="container mx-auto px-8 lg:px-0">
+          <div className="flex justify-center lg:justify-end max-w-[350px] mx-auto lg:ml-0">
+            <button className="bg-[#10221B] hover:bg-[#1A3429] text-white px-6 py-3 rounded-[15px] flex items-center gap-2 transition-colors w-full justify-center">
+              <span className="text-lg font-semibold">COMPLETE & CONTINUE</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
