@@ -29,7 +29,7 @@ const Email = styled.div`
   color: #666;
 `;
 
-const AccountSection = () => {
+export const AccountSection = () => {
   return (
     <AccountContainer>
       <AccountInfo>
