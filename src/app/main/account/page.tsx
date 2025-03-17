@@ -36,7 +36,6 @@ export default function AccountPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
 
-  const [displayName, setDisplayName] = useState("");
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
@@ -72,10 +71,9 @@ export default function AccountPage() {
       if (userSnap.exists()) {
         const data = userSnap.data() as UserData;
         setUserData(data);
-        setDisplayName(data.displayName || "");
-        setPhotoURL(data.photoURL || "");
         setName(data.name || "");
         setSurname(data.surname || "");
+        setPhotoURL(data.photoURL || "");
         setEmail(typedUser.email || "");
       } else {
         // Create a new user document if it doesn't exist
