@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Route } from 'next';
+import type { Route } from 'next';
 
 export default function Header() {
   return (
