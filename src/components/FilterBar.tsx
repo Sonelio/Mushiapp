@@ -66,8 +66,14 @@ export default function FilterBar({
     <div className={`space-y-6 ${embedded ? '' : 'p-4'}`}>
       {/* Selection Count - Only show in mobile when not embedded */}
       {!embedded && totalSelected > 0 && (
-        <div className="flex justify-start items-center mb-4 pb-4 border-b border-gray-700">
+        <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-700">
           <span className="text-sm text-gray-400">{totalSelected} selected</span>
+          <button
+            onClick={clearAllSelections}
+            className="text-sm text-gray-400 hover:text-white transition-colors"
+          >
+            Clear All
+          </button>
         </div>
       )}
 
