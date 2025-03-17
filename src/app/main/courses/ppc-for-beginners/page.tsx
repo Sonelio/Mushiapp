@@ -34,6 +34,10 @@ export default function CourseContent() {
     );
   };
 
+  const handleLessonClick = (lessonId: string) => {
+    setSelectedLesson(lessonId);
+  };
+
   const courseContent = {
     theory: [
       { id: 'digital-advertising', title: 'How Digital Advertising Works' },
@@ -102,20 +106,24 @@ export default function CourseContent() {
                       <div 
                         key={item.id} 
                         className={`p-4 cursor-pointer text-white transition-colors ${
-                          selectedLesson === item.id && completedLessons.includes(item.id) ? 'bg-black' : ''
+                          selectedLesson === item.id ? 'bg-black' : 'bg-[#10221B]'
                         }`}
-                        onClick={() => {
-                          toggleLesson(item.id);
-                          setSelectedLesson(item.id);
-                        }}
+                        onClick={() => handleLessonClick(item.id)}
                       >
                         <div className="flex items-center gap-3">
-                          <Image
-                            src={completedLessons.includes(item.id) ? "/courses-checked.png" : "/courses-unchecked.png"}
-                            alt={completedLessons.includes(item.id) ? "Completed" : "Not completed"}
-                            width={20}
-                            height={20}
-                          />
+                          <div 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleLesson(item.id);
+                            }}
+                          >
+                            <Image
+                              src={completedLessons.includes(item.id) ? "/courses-checked.png" : "/courses-unchecked.png"}
+                              alt={completedLessons.includes(item.id) ? "Completed" : "Not completed"}
+                              width={20}
+                              height={20}
+                            />
+                          </div>
                           <span>{item.title}</span>
                         </div>
                       </div>
@@ -145,20 +153,24 @@ export default function CourseContent() {
                       <div 
                         key={item.id} 
                         className={`p-4 cursor-pointer text-white transition-colors ${
-                          selectedLesson === item.id && completedLessons.includes(item.id) ? 'bg-black' : ''
+                          selectedLesson === item.id ? 'bg-black' : 'bg-[#10221B]'
                         }`}
-                        onClick={() => {
-                          toggleLesson(item.id);
-                          setSelectedLesson(item.id);
-                        }}
+                        onClick={() => handleLessonClick(item.id)}
                       >
                         <div className="flex items-center gap-3">
-                          <Image
-                            src={completedLessons.includes(item.id) ? "/courses-checked.png" : "/courses-unchecked.png"}
-                            alt={completedLessons.includes(item.id) ? "Completed" : "Not completed"}
-                            width={20}
-                            height={20}
-                          />
+                          <div 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleLesson(item.id);
+                            }}
+                          >
+                            <Image
+                              src={completedLessons.includes(item.id) ? "/courses-checked.png" : "/courses-unchecked.png"}
+                              alt={completedLessons.includes(item.id) ? "Completed" : "Not completed"}
+                              width={20}
+                              height={20}
+                            />
+                          </div>
                           <span>{item.title}</span>
                         </div>
                       </div>
@@ -188,20 +200,24 @@ export default function CourseContent() {
                       <div 
                         key={item.id} 
                         className={`p-4 cursor-pointer text-white transition-colors ${
-                          selectedLesson === item.id && completedLessons.includes(item.id) ? 'bg-black' : ''
+                          selectedLesson === item.id ? 'bg-black' : 'bg-[#10221B]'
                         }`}
-                        onClick={() => {
-                          toggleLesson(item.id);
-                          setSelectedLesson(item.id);
-                        }}
+                        onClick={() => handleLessonClick(item.id)}
                       >
                         <div className="flex items-center gap-3">
-                          <Image
-                            src={completedLessons.includes(item.id) ? "/courses-checked.png" : "/courses-unchecked.png"}
-                            alt={completedLessons.includes(item.id) ? "Completed" : "Not completed"}
-                            width={20}
-                            height={20}
-                          />
+                          <div 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleLesson(item.id);
+                            }}
+                          >
+                            <Image
+                              src={completedLessons.includes(item.id) ? "/courses-checked.png" : "/courses-unchecked.png"}
+                              alt={completedLessons.includes(item.id) ? "Completed" : "Not completed"}
+                              width={20}
+                              height={20}
+                            />
+                          </div>
                           <span>{item.title}</span>
                         </div>
                       </div>
@@ -231,20 +247,24 @@ export default function CourseContent() {
                       <div 
                         key={item.id} 
                         className={`p-4 cursor-pointer text-white transition-colors ${
-                          selectedLesson === item.id && completedLessons.includes(item.id) ? 'bg-black' : ''
+                          selectedLesson === item.id ? 'bg-black' : 'bg-[#10221B]'
                         }`}
-                        onClick={() => {
-                          toggleLesson(item.id);
-                          setSelectedLesson(item.id);
-                        }}
+                        onClick={() => handleLessonClick(item.id)}
                       >
                         <div className="flex items-center gap-3">
-                          <Image
-                            src={completedLessons.includes(item.id) ? "/courses-checked.png" : "/courses-unchecked.png"}
-                            alt={completedLessons.includes(item.id) ? "Completed" : "Not completed"}
-                            width={20}
-                            height={20}
-                          />
+                          <div 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleLesson(item.id);
+                            }}
+                          >
+                            <Image
+                              src={completedLessons.includes(item.id) ? "/courses-checked.png" : "/courses-unchecked.png"}
+                              alt={completedLessons.includes(item.id) ? "Completed" : "Not completed"}
+                              width={20}
+                              height={20}
+                            />
+                          </div>
                           <span>{item.title}</span>
                         </div>
                       </div>
