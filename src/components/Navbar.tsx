@@ -16,22 +16,11 @@ export default function Navbar() {
   const { user } = useAuth() as { user: User | null; loading: boolean };
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const isTemplatesActive = pathname === '/main/membership';
   const isCoursesActive = pathname.startsWith('/main/courses');
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
