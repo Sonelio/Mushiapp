@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect } from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
-import { Route } from 'next';
+import type { Route } from 'next';
 
 interface LessonClientProps {
   slug: string;
