@@ -1,5 +1,4 @@
 import React, { forwardRef, useState } from "react";
-import Image from "next/image";
 
 interface Template {
   id: string;
