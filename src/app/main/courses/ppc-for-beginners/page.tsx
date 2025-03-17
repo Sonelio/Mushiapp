@@ -24,6 +24,14 @@ export default function CourseContent() {
     }));
   };
 
+  const toggleLesson = (lessonId: string) => {
+    setCompletedLessons(prev => 
+      prev.includes(lessonId) 
+        ? prev.filter(id => id !== lessonId)
+        : [...prev, lessonId]
+    );
+  };
+
   const courseContent = {
     theory: [
       { id: 'digital-advertising', title: 'How Digital Advertising Works' },
@@ -89,7 +97,11 @@ export default function CourseContent() {
                 {expandedSections.theory && (
                   <div className="space-y-1 bg-[#10221B]">
                     {courseContent.theory.map(item => (
-                      <div key={item.id} className="p-4 hover:bg-black/20 cursor-pointer text-white hover:text-white transition-colors">
+                      <div 
+                        key={item.id} 
+                        className="p-4 hover:bg-black/20 cursor-pointer text-white hover:text-white transition-colors"
+                        onClick={() => toggleLesson(item.id)}
+                      >
                         <div className="flex items-center gap-3">
                           <Image
                             src={completedLessons.includes(item.id) ? "/courses-checked.png" : "/courses-unchecked.png"}
@@ -123,7 +135,11 @@ export default function CourseContent() {
                 {expandedSections.stepByStep && (
                   <div className="space-y-1 bg-[#10221B]">
                     {courseContent.stepByStep.map(item => (
-                      <div key={item.id} className="p-4 hover:bg-black/20 cursor-pointer text-white hover:text-white transition-colors">
+                      <div 
+                        key={item.id} 
+                        className="p-4 hover:bg-black/20 cursor-pointer text-white hover:text-white transition-colors"
+                        onClick={() => toggleLesson(item.id)}
+                      >
                         <div className="flex items-center gap-3">
                           <Image
                             src={completedLessons.includes(item.id) ? "/courses-checked.png" : "/courses-unchecked.png"}
@@ -157,7 +173,11 @@ export default function CourseContent() {
                 {expandedSections.optimization && (
                   <div className="space-y-1 bg-[#10221B]">
                     {courseContent.optimization.map(item => (
-                      <div key={item.id} className="p-4 hover:bg-black/20 cursor-pointer text-white hover:text-white transition-colors">
+                      <div 
+                        key={item.id} 
+                        className="p-4 hover:bg-black/20 cursor-pointer text-white hover:text-white transition-colors"
+                        onClick={() => toggleLesson(item.id)}
+                      >
                         <div className="flex items-center gap-3">
                           <Image
                             src={completedLessons.includes(item.id) ? "/courses-checked.png" : "/courses-unchecked.png"}
@@ -191,7 +211,11 @@ export default function CourseContent() {
                 {expandedSections.troubleshooting && (
                   <div className="space-y-1 bg-[#10221B]">
                     {courseContent.troubleshooting.map(item => (
-                      <div key={item.id} className="p-4 hover:bg-black/20 cursor-pointer text-white hover:text-white transition-colors">
+                      <div 
+                        key={item.id} 
+                        className="p-4 hover:bg-black/20 cursor-pointer text-white hover:text-white transition-colors"
+                        onClick={() => toggleLesson(item.id)}
+                      >
                         <div className="flex items-center gap-3">
                           <Image
                             src={completedLessons.includes(item.id) ? "/courses-checked.png" : "/courses-unchecked.png"}
