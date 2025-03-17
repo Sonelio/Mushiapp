@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import type { Route } from 'next';
 
 interface LessonClientProps {
   slug: string;
@@ -11,12 +10,21 @@ interface LessonClientProps {
 export default function LessonClient({ slug }: LessonClientProps) {
   const [isCompleted, setIsCompleted] = useState(false);
 
+  // Mock lesson data - in a real app, this would come from an API based on the slug
+  const nextLessonSlug = "data-and-pixel";
+  const prevLessonSlug = "";  // Empty for first lesson
+
+  const getNavigationHref = (lessonSlug: string | null) => {
+    if (!lessonSlug) return { pathname: "#" };
+    return { pathname: `/main/courses/${lessonSlug}` };
+  };
+
   return (
     <div className="min-h-screen bg-[#0B0F0F] text-white flex">
       {/* Sidebar */}
       <aside className="w-80 bg-[#0E1814] min-h-screen p-6 space-y-6">
         <Link 
-          href={"/main/courses" as Route}
+          href={{ pathname: "/main/courses" }}
           className="inline-flex items-center text-gray-300 hover:text-white transition-colors mb-8"
         >
           <svg 
@@ -43,17 +51,18 @@ export default function LessonClient({ slug }: LessonClientProps) {
             <div className="bg-[#11231C] p-4 rounded-lg">
               <h4 className="font-medium">How Digital Advertising Works</h4>
               <p className="text-sm text-gray-400 mt-1">Understanding the basics</p>
+              <p className="text-sm text-gray-400 mt-1">Lesson ID: {slug}</p>
             </div>
           </div>
 
           <div className="space-y-2">
             <h3 className="text-sm font-medium text-gray-400 uppercase">Next Up</h3>
             <div className="space-y-2">
-              <Link href={"#" as Route} className="block p-4 hover:bg-[#11231C] rounded-lg transition-colors">
+              <Link href={{ pathname: "/main/courses/data-and-pixel" }} className="block p-4 hover:bg-[#11231C] rounded-lg transition-colors">
                 <h4 className="font-medium">Data & Pixel</h4>
                 <p className="text-sm text-gray-400">Setting up tracking</p>
               </Link>
-              <Link href={"#" as Route} className="block p-4 hover:bg-[#11231C] rounded-lg transition-colors">
+              <Link href={{ pathname: "/main/courses/kpi" }} className="block p-4 hover:bg-[#11231C] rounded-lg transition-colors">
                 <h4 className="font-medium">Key Performance Indicators</h4>
                 <p className="text-sm text-gray-400">Measuring success</p>
               </Link>
@@ -112,7 +121,7 @@ export default function LessonClient({ slug }: LessonClientProps) {
               <ul className="space-y-2">
                 <li>
                   <a 
-                    href={"#" as Route}
+                    href={`/api/lessons/${slug}/slides`}
                     className="inline-flex items-center text-gray-300 hover:text-white transition-colors"
                   >
                     <svg 
@@ -134,7 +143,7 @@ export default function LessonClient({ slug }: LessonClientProps) {
                 </li>
                 <li>
                   <a 
-                    href={"#" as Route}
+                    href={`/api/lessons/${slug}/workbook`}
                     className="inline-flex items-center text-gray-300 hover:text-white transition-colors"
                   >
                     <svg 
@@ -160,9 +169,13 @@ export default function LessonClient({ slug }: LessonClientProps) {
 
           {/* Navigation Buttons */}
           <div className="flex justify-between mt-12 pt-6 border-t border-gray-800">
-            <button
-              className="px-6 py-3 bg-[#11231C] text-gray-300 rounded-md hover:bg-[#1a3429] transition-colors inline-flex items-center"
-              disabled
+            <Link
+              href={getNavigationHref(prevLessonSlug)}
+              className={`px-6 py-3 ${
+                prevLessonSlug 
+                  ? "bg-[#11231C] text-gray-300 hover:bg-[#1a3429]" 
+                  : "bg-[#11231C]/50 text-gray-500 cursor-not-allowed"
+              } rounded-md transition-colors inline-flex items-center`}
             >
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
@@ -179,8 +192,9 @@ export default function LessonClient({ slug }: LessonClientProps) {
                 />
               </svg>
               Previous Lesson
-            </button>
-            <button
+            </Link>
+            <Link
+              href={getNavigationHref(nextLessonSlug)}
               className="px-6 py-3 bg-[#2F6E3F] text-white rounded-md hover:bg-[#2D6B39] transition-colors inline-flex items-center"
             >
               Next Lesson
@@ -198,7 +212,7 @@ export default function LessonClient({ slug }: LessonClientProps) {
                   d="M9 5l7 7-7 7" 
                 />
               </svg>
-            </button>
+            </Link>
           </div>
         </div>
       </main>
