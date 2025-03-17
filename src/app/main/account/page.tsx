@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
+import { useState, useEffect, useRef } from "react";
+import type { FormEvent, ChangeEvent } from "react";
 import { useAuth } from "../../../lib/useAuth";
-import { doc, getDoc, setDoc, updateDoc, DocumentData } from "firebase/firestore";
-import { signOut, User } from "firebase/auth";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import type { DocumentData } from "firebase/firestore";
+import { signOut } from "firebase/auth";
+import type { User } from "firebase/auth";
 import { db, auth, storage } from "../../../lib/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/navigation";
