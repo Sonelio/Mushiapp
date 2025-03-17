@@ -16,11 +16,30 @@ interface TemplateCardProps {
 
 const TemplateCard = forwardRef<HTMLDivElement, TemplateCardProps>(({ template, isSaved, onToggleSave }, ref) => {
   const [isClicked, setIsClicked] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if we're on a mobile device
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Set initial value
+    handleResize();
+    
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+    
+    // Cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsClicked(!isClicked);
+    if (isMobile) {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsClicked(!isClicked);
+    }
   };
 
   return (
@@ -37,7 +56,9 @@ const TemplateCard = forwardRef<HTMLDivElement, TemplateCardProps>(({ template, 
             {/* Hover/Click Overlay for "Open in Canva" */}
             <div
               className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
-                isClicked ? 'opacity-100' : 'opacity-0 md:group-hover:opacity-100'
+                isMobile 
+                  ? isClicked ? 'opacity-100' : 'opacity-0'
+                  : 'opacity-0 group-hover:opacity-100'
               }`}
               style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
             >

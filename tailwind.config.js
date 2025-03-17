@@ -50,4 +50,15 @@ module.exports = {
   plugins: [
     require('@tailwindcss/typography'),
   ],
+  // Optimize for production
+  future: {
+    hoverOnlyWhenSupported: true,
+    respectDefaultRingColorOpacity: true,
+    disableColorOpacityUtilitiesByDefault: true,
+  },
+  // Disable unused features
+  corePlugins: {
+    preflight: true,
+    container: false, // Enable only if you use Tailwind's container
+  },
 } 
