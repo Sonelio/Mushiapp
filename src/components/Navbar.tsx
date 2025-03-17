@@ -13,7 +13,7 @@ interface User {
 }
 
 export default function Navbar() {
-  const { user, loading } = useAuth() as { user: User | null; loading: boolean };
+  const { user } = useAuth() as { user: User | null; loading: boolean };
   const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
