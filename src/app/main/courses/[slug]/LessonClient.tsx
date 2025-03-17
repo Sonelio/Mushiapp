@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
 import type { Route } from 'next';
