@@ -203,34 +203,28 @@ export default function MembershipPage() {
 
   // Modified click handlers for industry
   const handleIndustryClick = (industry) => {
-    if (isMobile) {
-      if (selectedIndustry.includes(industry)) {
-        setSelectedIndustry(selectedIndustry.filter(i => i !== industry));
-      } else {
-        setSelectedIndustry([...selectedIndustry, industry]);
-      }
+    if (selectedIndustry.includes(industry)) {
+      setSelectedIndustry(selectedIndustry.filter(i => i !== industry));
+    } else {
+      setSelectedIndustry([...selectedIndustry, industry]);
     }
   };
 
   // Modified click handlers for format
   const handleFormatClick = (format) => {
-    if (isMobile) {
-      if (selectedFormat.includes(format)) {
-        setSelectedFormat(selectedFormat.filter(f => f !== format));
-      } else {
-        setSelectedFormat([...selectedFormat, format]);
-      }
+    if (selectedFormat.includes(format)) {
+      setSelectedFormat(selectedFormat.filter(f => f !== format));
+    } else {
+      setSelectedFormat([...selectedFormat, format]);
     }
   };
 
   // Modified click handlers for language
   const handleLanguageClick = (language) => {
-    if (isMobile) {
-      if (selectedLanguage.includes(language)) {
-        setSelectedLanguage(selectedLanguage.filter(l => l !== language));
-      } else {
-        setSelectedLanguage([...selectedLanguage, language]);
-      }
+    if (selectedLanguage.includes(language)) {
+      setSelectedLanguage(selectedLanguage.filter(l => l !== language));
+    } else {
+      setSelectedLanguage([...selectedLanguage, language]);
     }
   };
 
