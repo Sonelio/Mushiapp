@@ -9,6 +9,7 @@ import {
   doc,
   getDoc,
   updateDoc,
+  writeBatch,
 } from "firebase/firestore";
 import { db } from "../../../lib/firebaseConfig";
 import FilterBar from "../../../components/FilterBar";
@@ -153,12 +154,28 @@ export default function MembershipPage() {
     if (!user) return;
     try {
       const userDocRef = doc(db, "users", user.uid);
+      const templateRef = doc(db, "templates", templateId);
       const isSaved = userSavedTemplates.includes(templateId);
+      
+      // Update user's saved templates
       const updatedSavedTemplates = isSaved
         ? userSavedTemplates.filter((id) => id !== templateId)
         : [...userSavedTemplates, templateId];
 
-      await updateDoc(userDocRef, { savedTemplates: updatedSavedTemplates });
+      // Update template's savedCount
+      const templateDoc = await getDoc(templateRef);
+      const currentSavedCount = templateDoc.data().savedCount || 0;
+      const newSavedCount = isSaved ? currentSavedCount - 1 : currentSavedCount + 1;
+
+      // Perform both updates in a batch
+      const batch = writeBatch(db);
+      batch.update(userDocRef, { savedTemplates: updatedSavedTemplates });
+      batch.update(templateRef, { 
+        savedCount: newSavedCount,
+        updatedAt: new Date()
+      });
+
+      await batch.commit();
       setUserSavedTemplates(updatedSavedTemplates);
     } catch (error) {
       console.error("Error toggling save status:", error);
@@ -191,9 +208,10 @@ export default function MembershipPage() {
         case "oldest":
           return (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0);
         case "popular":
-          return (b.popularity || 0) - (a.popularity || 0);
+          // Use savedCount for popularity sorting
+          return (b.savedCount || 0) - (a.savedCount || 0);
         default:
-          return (b.popularity || 0) - (a.popularity || 0);
+          return (b.savedCount || 0) - (a.savedCount || 0);
       }
     });
   }, [templates, selectedIndustry, selectedFormat, selectedLanguage, sortOption, userSavedTemplates]);
