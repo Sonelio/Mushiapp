@@ -498,11 +498,6 @@ export default function MembershipPage() {
             >
               <div className="flex items-center" style={{flex: "1"}}>
                 <span className="uppercase text-xl font-semibold">Industry</span>
-                {selectedIndustry.length > 0 && (
-                  <span className="ml-1 text-xs">
-                    {selectedIndustry.length}
-                  </span>
-                )}
               </div>
               <img 
                 src="/filter-bar-1.png"
@@ -574,11 +569,6 @@ export default function MembershipPage() {
             >
               <div className="flex items-center" style={{flex: "1"}}>
                 <span className="uppercase text-xl font-semibold">Format</span>
-                {selectedFormat.length > 0 && (
-                  <span className="ml-1 text-xs">
-                    {selectedFormat.length}
-                  </span>
-                )}
               </div>
               <img 
                 src="/filter-bar-1.png"
@@ -650,11 +640,6 @@ export default function MembershipPage() {
             >
               <div className="flex items-center" style={{flex: "1"}}>
                 <span className="uppercase text-xl font-semibold">Language</span>
-                {selectedLanguage.length > 0 && (
-                  <span className="ml-1 text-xs">
-                    {selectedLanguage.length}
-                  </span>
-                )}
               </div>
               <img 
                 src="/filter-bar-1.png"
